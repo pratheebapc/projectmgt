@@ -1,7 +1,6 @@
 package com.zaga.model.entity;
 
 import java.time.LocalDate;
-import java.util.TimeZone;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;

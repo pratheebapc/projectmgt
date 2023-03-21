@@ -11,4 +11,5 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
     @Inject 
     ProjectDetailsRepository repo;
+    
 }

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Attendees {
     public String name;
-    public String organisation;
+    public String organization;
 }
