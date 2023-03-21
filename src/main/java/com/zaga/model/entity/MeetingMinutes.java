@@ -26,7 +26,7 @@ public class MeetingMinutes extends PanacheMongoEntity{
     public String  projectName;
     public String projectId;
     public String meetingMinutesId;
-    public LocalDate date;
+    public String date;
     public String startTime;
     public String endTime;
     public String meetingObjective;
