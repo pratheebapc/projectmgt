@@ -9,5 +9,6 @@ public interface MeetingMinutesService {
 
     void deleteMeetingMinutes(String meetingMinutesId);
 
+    MeetingMinutes createMeetingMinutes(MeetingMinutes meetingMinutes);
+
 }
-    
