@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.zaga.model.dto.UpdateProjectDetails;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.service.ProjectDetailsService;
 
@@ -49,9 +48,9 @@ public class ProjectDetailsResource {
 
     @PUT
     @Path("/projectManagement/updateProjectDetails")
-    public Response updateProjectDetails(UpdateProjectDetails dto){
+    public Response updateProjectDetails(ProjectDetails dto){
         service.updateProjectDetails(dto);
-        return Response.ok(dto.getProjectDetails()).build();
+        return Response.ok(dto).build();
     }
     @DELETE
     @Path("/projectManagement/deleteProjectDetails/{projectId}")

@@ -2,14 +2,14 @@ package com.zaga.service;
 
 import java.util.List;
 
-import com.zaga.model.dto.UpdateProjectDetails;
+
 import com.zaga.model.entity.ProjectDetails;
 
 public interface ProjectDetailsService {
     
     ProjectDetails createProjectDetails(ProjectDetails projectDetails);
 
-    ProjectDetails updateProjectDetails(UpdateProjectDetails dto);
+    ProjectDetails updateProjectDetails(ProjectDetails dto);
 
     List<ProjectDetails> getProjectDetails();
 

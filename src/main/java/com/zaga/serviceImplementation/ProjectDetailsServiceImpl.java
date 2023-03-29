@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-import com.zaga.model.dto.UpdateProjectDetails;
+
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.repository.ProjectDetailsRepository;
 import com.zaga.service.ProjectDetailsService;
@@ -37,13 +37,13 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     }
 
     @Override
-    public ProjectDetails updateProjectDetails(UpdateProjectDetails dto) {
+    public ProjectDetails updateProjectDetails(ProjectDetails dto) {
         // TODO Auto-generated method stub
        ProjectDetails projectDetails = repo.getProjectDetailsById(dto.getProjectId());
-       ProjectDetails details = dto.getProjectDetails();
+       ProjectDetails details = dto;
        details.setId(projectDetails.getId());
        ProjectDetails.update(details);
-       return dto.getProjectDetails();
+       return dto;
 
 
     }
