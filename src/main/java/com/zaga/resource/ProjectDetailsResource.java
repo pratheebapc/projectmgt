@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -26,34 +27,34 @@ public class ProjectDetailsResource {
     ProjectDetailsService service;
 
    @POST
-   @Path("/projectManagement/createProjectDetails")
+   @Path("/createProjectDetails")
     public Response createProjectDetails(ProjectDetails projectDetails){
         ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
         return Response.ok(projectDetails2).build();
     }
 
     @GET
-    @Path("/projectManagement/viewProjectDetails")
+    @Path("/viewProjectDetails")
      public Response getProjectDetails(){
         List<ProjectDetails> projectDetails = service.getProjectDetails();
         return Response.ok(projectDetails).build();
     }
 
     @GET
-    @Path("/projectManagement/viewProjectDetailsById/{projectId}")
+    @Path("/viewProjectDetailsById/{projectId}")
     public Response getProjectDetailsById(@PathParam("projectId") String projectId){
         ProjectDetails projectDetails = service.getProjectDetailsById(projectId);
         return Response.ok(projectDetails).build();
     }
 
     @PUT
-    @Path("/projectManagement/updateProjectDetails")
+    @Path("/updateProjectDetails")
     public Response updateProjectDetails(ProjectDetails dto){
         service.updateProjectDetails(dto);
         return Response.ok(dto).build();
     }
     @DELETE
-    @Path("/projectManagement/deleteProjectDetails/{projectId}")
+    @Path("/deleteProjectDetails/{projectId}")
     public void deleteProjectDetails(@PathParam("projectId") String projectId){
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
         service.deleteProjectDetails(projectId);

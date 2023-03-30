@@ -6,7 +6,7 @@ import com.zaga.model.entity.ProjectDetails;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
-import io.quarkus.mongodb.panache.common.PanacheUpdate;
+// import io.quarkus.mongodb.panache.common.PanacheUpdate;
 
 @ApplicationScoped
 public class ProjectDetailsRepository implements PanacheMongoRepository<ProjectDetails> {
@@ -29,7 +29,5 @@ public class ProjectDetailsRepository implements PanacheMongoRepository<ProjectD
         ProjectDetails.delete("projectId=?1", projectId);
         
     }
-    
-    
     
 }
