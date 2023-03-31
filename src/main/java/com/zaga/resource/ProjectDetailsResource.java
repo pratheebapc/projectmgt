@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -43,8 +44,14 @@ public class ProjectDetailsResource {
            schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class))
    )
     public Response createProjectDetails(ProjectDetails projectDetails){
+       try{ 
+        System.out.println("--------------ProjectDetails"+projectDetails);
         ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
         return Response.ok(projectDetails2).build();
+        }
+        catch( WebApplicationException e) {
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
+        }
     }
 
     @GET

@@ -67,6 +67,8 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
     @Override
     public ProjectDetails updateProjectDetails(ProjectDetails dto) {
+
+        logger.info("Projectdetail inside service implementation "+dto);
         
        ProjectDetails projectDetails = repo.getProjectDetailsById(dto.getProjectId());
        if (projectDetails == null){
@@ -91,13 +93,13 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     @Override
      public Boolean canCreate(ProjectDetails projectDetails) {
           
-        ProjectDetails testprojectDetails = getProjectDetailsById(projectDetails.getProjectId());
+        ProjectDetails testprojectDetails =  repo.checkProjectDetails(projectDetails);
 
          if (testprojectDetails == null){
             return Boolean.TRUE;
          }
 
-        return null ;
+        return Boolean.FALSE ;
 
      }
 

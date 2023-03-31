@@ -17,6 +17,14 @@ public class ProjectDetailsRepository implements PanacheMongoRepository<ProjectD
         return pd;
     }
 
+    public ProjectDetails checkProjectDetails(ProjectDetails projectDetails){
+        System.out.println("ProjectDetails checkProjectDetails--------------------------"+projectDetails);
+        PanacheQuery<ProjectDetails> details = ProjectDetails.find("projectName=?1", projectDetails.getProjectName());
+        ProjectDetails pd = details.firstResult();
+        System.out.println("pd--------------"+pd);
+        return pd;
+    }
+
     // public ProjectDetails updateProjectDetails(String projectId, ProjectDetails projectDetails){
     //     PanacheQuery<ProjectDetails> details = ProjectDetails.find("projectId=?1", projectId);
     //     PanacheUpdate pd = update(
