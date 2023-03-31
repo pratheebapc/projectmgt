@@ -15,9 +15,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.service.ProjectDetailsService;
 
+@Tag (name = "Project Details", description = "CRUD Operations for Project Details")
 @Path("/zaga/projectManagement")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,6 +35,13 @@ public class ProjectDetailsResource {
 
    @POST
    @Path("/createProjectDetails")
+   @APIResponse(
+   responseCode = "200",
+   description = "Created a new project details mongodb document in the mongodb collection - Project Details",
+   content = @Content (
+           mediaType = MediaType.APPLICATION_JSON,
+           schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class))
+   )
     public Response createProjectDetails(ProjectDetails projectDetails){
         ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
         return Response.ok(projectDetails2).build();
@@ -35,6 +49,14 @@ public class ProjectDetailsResource {
 
     @GET
     @Path("/viewProjectDetails")
+    @APIResponse(
+            responseCode = "200",
+            description = "Viewing All Project Details",
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)
+            )
+    )
      public Response getProjectDetails(){
         List<ProjectDetails> projectDetails = service.getProjectDetails();
         return Response.ok(projectDetails).build();
@@ -42,6 +64,14 @@ public class ProjectDetailsResource {
 
     @GET
     @Path("/viewProjectDetailsById/{projectId}")
+    @APIResponse(
+            responseCode = "200",
+            description = "Viewing Project Details by projectId",
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
+            )
+    )
     public Response getProjectDetailsById(@PathParam("projectId") String projectId){
         ProjectDetails projectDetails = service.getProjectDetailsById(projectId);
         return Response.ok(projectDetails).build();
@@ -49,12 +79,28 @@ public class ProjectDetailsResource {
 
     @PUT
     @Path("/updateProjectDetails")
+    @APIResponse(
+        responseCode = "200",
+        description = "Updated Project Details mongodb document in the mongodb database by projectId",
+        content = @Content(
+                mediaType = MediaType.APPLICATION_JSON,
+                schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
+        )
+)
     public Response updateProjectDetails(ProjectDetails dto){
         service.updateProjectDetails(dto);
         return Response.ok(dto).build();
     }
     @DELETE
     @Path("/deleteProjectDetails/{projectId}")
+    @APIResponse(
+        responseCode = "204",
+        description = "Deleted a Project Details mongodb document in the mongodb database by projectId",
+        content = @Content(
+                mediaType = MediaType.APPLICATION_JSON,
+                schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
+        )
+)
     public void deleteProjectDetails(@PathParam("projectId") String projectId){
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
         service.deleteProjectDetails(projectId);

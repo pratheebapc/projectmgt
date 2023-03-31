@@ -5,10 +5,12 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
 
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.repository.ProjectDetailsRepository;
+import com.zaga.repository.SequenceRepository;
 import com.zaga.service.ProjectDetailsService;
 
 @ApplicationScoped
@@ -17,9 +19,17 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     @Inject 
     ProjectDetailsRepository repo;
 
+    @Inject
+    Logger logger;
+ 
+    @Inject
+    SequenceRepository seqRepo;
+
     @Override
     public ProjectDetails createProjectDetails(ProjectDetails projectDetails) {
         // TODO Auto-generated method stub
+        String seqNo = seqRepo.getSequenceCounter("Project");
+        projectDetails.setProjectId(seqNo);
         ProjectDetails.persist(projectDetails);
         return projectDetails;   
     }
