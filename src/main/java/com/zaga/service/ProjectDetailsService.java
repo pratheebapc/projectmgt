@@ -17,6 +17,8 @@ public interface ProjectDetailsService {
 
 
     void deleteProjectDetails(String projectId);
+    
+    Boolean canCreate(ProjectDetails projectDetails);
 
     // ProjectDetails viewProjectDetails(ProjectDetails projectDetails);}
 }
