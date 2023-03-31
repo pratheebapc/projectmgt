@@ -1,8 +1,11 @@
 package com.zaga.resource;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import lombok.Builder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,9 +22,12 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 
+import com.zaga.event.EventDto;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.service.ProjectDetailsService;
 
@@ -30,6 +36,11 @@ import com.zaga.service.ProjectDetailsService;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProjectDetailsResource {
+
+
+    @Inject
+    @Channel("mail-out")
+    Emitter<EventDto> eventemitter;
 
     @Inject
     ProjectDetailsService service;
@@ -46,8 +57,16 @@ public class ProjectDetailsResource {
     public Response createProjectDetails(ProjectDetails projectDetails){
        try{ 
         System.out.println("--------------ProjectDetails"+projectDetails);
+
         ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
-        return Response.ok(projectDetails2).build();
+
+        EventDto poEvent = EventDto.builder().destination("PoService").source("ProjectAssigment").eventDate(LocalDateTime.now())
+                                     .eventId(UUID.randomUUID().toString())
+                                     .eventData(projectDetails2).build();
+
+        eventemitter.send(poEvent);
+
+  return Response.ok(projectDetails2).build();
         }
         catch( WebApplicationException e) {
             return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();

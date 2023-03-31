@@ -18,16 +18,16 @@ import com.zaga.model.entity.ProjectDetails;
 @Path("/test")
 public class MailProducer {
 
-    @Inject
-    @Channel("mail-out")
-    Emitter<ProjectDetails> emitter;
+    // @Inject
+    // @Channel("mail-out")
+    // Emitter<ProjectDetails> emitter;
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public ProjectDetails MailProducer(ProjectDetails dto){
 
-           emitter.send(dto);
+          // emitter.send(dto);
 
           // Message<ProjectDetails> op = emitter.;
 
