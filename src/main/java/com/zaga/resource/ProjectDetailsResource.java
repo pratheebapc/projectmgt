@@ -80,8 +80,13 @@ public class ProjectDetailsResource {
             )
     )
     public Response getProjectDetailsById(@PathParam("projectId") String projectId){
-        ProjectDetails projectDetails = service.getProjectDetailsById(projectId);
+        try{
+            ProjectDetails projectDetails = service.getProjectDetailsById(projectId);
         return Response.ok(projectDetails).build();
+        }
+        catch(WebApplicationException e){
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
+        }
     }
 
     @PUT
@@ -95,8 +100,13 @@ public class ProjectDetailsResource {
         )
 )
     public Response updateProjectDetails(ProjectDetails dto){
-        service.updateProjectDetails(dto);
-        return Response.ok(dto).build();
+        try{
+            service.updateProjectDetails(dto);
+            return Response.ok(dto).build();
+        }
+        catch(WebApplicationException e){
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
+        }
     }
     @DELETE
     @Path("/deleteProjectDetails/{projectId}")
@@ -110,6 +120,8 @@ public class ProjectDetailsResource {
 )
     public void deleteProjectDetails(@PathParam("projectId") String projectId){
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
-        service.deleteProjectDetails(projectId);
-    }
+            service.deleteProjectDetails(projectId);
+
+        
+}
 }

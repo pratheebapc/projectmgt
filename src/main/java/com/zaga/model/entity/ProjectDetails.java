@@ -1,7 +1,7 @@
 package com.zaga.model.entity;
 
 import java.time.LocalDate;
-import java.util.TimeZone;
+import java.util.*;
 
 import org.bson.types.ObjectId;
 
@@ -29,6 +29,7 @@ public class ProjectDetails extends PanacheMongoEntity {
     public String employeeNumber;
     public String employeeId;
     public String employeeRole;
+    public boolean projectAssignmentStatus;
 
     //basic project datas
     public String projectManager ,projectName;

@@ -14,7 +14,7 @@ public class ProjectDetailsTest {
 
     @Test
     void createProjectDetailsApiTest(){
-        ProjectDetails projectDetails = new ProjectDetails(null,"","","","","","","","","","","","","","","","","","","","",null, null, null, null, null, Currency.EUR,"","","","");
+        ProjectDetails projectDetails = new ProjectDetails(null,"sharamua","","","","",false, "","","","","","","","","","","","","","","",null, null, null, null, null, Currency.EUR,"","","","");
         RestAssured.given().contentType(ContentType.JSON).accept(ContentType.JSON).body(projectDetails)
         .when().post("/zaga/projectManagement/createProjectDetails")
         .then().statusCode(200);
@@ -36,7 +36,7 @@ public class ProjectDetailsTest {
     }
     void updateProjectDetailsApiTest(){
         // ProjectDetails projectDetails = new ProjectDetails(null,"", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        ProjectDetails projectDetails = new ProjectDetails(null,"", null, null, null, null, null, null, "3","",null, null, null, null, null, null, null,"",null, null, null, null, null, null, null,"",null, null, null, null, null);
+        ProjectDetails projectDetails = new ProjectDetails(null,"", null, null, null, null, false, null, null, "3","",null, null, null, null, null, null, null,"",null, null, null, null, null, null, null,"",null, null, null, null, null);
         RestAssured.given().contentType(ContentType.JSON).accept(ContentType.JSON).body(projectDetails) //.pathParam("projectId", "3")
         .when().put("/zaga/projectManagement/updateProjectDetails")
         .then().statusCode(200);
