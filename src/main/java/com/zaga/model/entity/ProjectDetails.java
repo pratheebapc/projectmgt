@@ -13,17 +13,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"id"})
-@MongoEntity(collection = "ProjectDetails" , database =  "ProjectManagement")
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "ProjectDetails", database = "ProjectManagement")
 public class ProjectDetails extends PanacheMongoEntity {
-    
+
     public ObjectId id;
 
-    //employee datass
+    // employee datass
     public String employeeName;
     public String employeeEmail;
     public String employeeNumber;
@@ -31,23 +30,23 @@ public class ProjectDetails extends PanacheMongoEntity {
     public String employeeRole;
     public boolean projectAssignmentStatus;
 
-    //basic project datas
-    public String projectManager ,projectName;
+    // basic project datas
+    public String projectManager, projectName;
     public String projectId;
     public String clientName;
     public String clientCountry;
     public String clientTimezone;
     public String clientAddress;
     public String clientEmail;
-    public String duration; //reference for period
+    public String duration; // reference for period
     public String startDate;
     public String endDate;
 
-    //quote datas
+    // quote datas
     public String quoteStatus;
     public String quoteId;
-    public String date; //start date
-    public String validDate; //endDate
+    public String date; // start date
+    public String validDate; // endDate
     public String from; // companyAddress
     public String to; // clientAddress
     public String serviceDescription;
@@ -56,10 +55,12 @@ public class ProjectDetails extends PanacheMongoEntity {
     public Currency clientCurrency;
     public String totalAmount;
 
-    //po datas
+    // po datas
     public String po;
     public String sfdc;
     public String pa;
 
-}
+    // ProjectType
+    public ProjectType projectType;
 
+}

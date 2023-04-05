@@ -2,22 +2,23 @@ package com.zaga.service;
 
 import java.util.List;
 
-
 import com.zaga.model.entity.ProjectDetails;
+import com.zaga.model.entity.ProjectLimitedDto;
 
 public interface ProjectDetailsService {
-    
+
     ProjectDetails createProjectDetails(ProjectDetails projectDetails);
 
     ProjectDetails updateProjectDetails(ProjectDetails dto);
 
-    List<ProjectDetails> getProjectDetails();
+    List<ProjectLimitedDto> getProjectDetails();
+
+    List<ProjectDetails> getProjectDetailsbyCategory(String category);
 
     ProjectDetails getProjectDetailsById(String projectId);
 
-
     void deleteProjectDetails(String projectId);
-    
+
     Boolean canCreate(ProjectDetails projectDetails);
 
     // ProjectDetails viewProjectDetails(ProjectDetails projectDetails);}

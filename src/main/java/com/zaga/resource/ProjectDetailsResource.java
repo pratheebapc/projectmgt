@@ -29,14 +29,14 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 
 import com.zaga.event.EventDto;
 import com.zaga.model.entity.ProjectDetails;
+import com.zaga.model.entity.ProjectLimitedDto;
 import com.zaga.service.ProjectDetailsService;
 
-@Tag (name = "Project Details", description = "CRUD Operations for Project Details")
+@Tag(name = "Project Details", description = "CRUD Operations for Project Details")
 @Path("/zaga/projectManagement")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProjectDetailsResource {
-
 
     @Inject
     @Channel("mail-out")
@@ -45,102 +45,78 @@ public class ProjectDetailsResource {
     @Inject
     ProjectDetailsService service;
 
-   @POST
-   @Path("/createProjectDetails")
-   @APIResponse(
-   responseCode = "200",
-   description = "Created a new project details mongodb document in the mongodb collection - Project Details",
-   content = @Content (
-           mediaType = MediaType.APPLICATION_JSON,
-           schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class))
-   )
-    public Response createProjectDetails(ProjectDetails projectDetails){
-       try{ 
-        System.out.println("--------------ProjectDetails"+projectDetails);
+    @POST
+    @Path("/createProjectDetails")
+    @APIResponse(responseCode = "200", description = "Created a new project details mongodb document in the mongodb collection - Project Details", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
+    public Response createProjectDetails(ProjectDetails projectDetails) {
+        try {
+            System.out.println("--------------ProjectDetails" + projectDetails);
 
-        ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
+            ProjectDetails projectDetails2 = service.createProjectDetails(projectDetails);
 
-        EventDto poEvent = EventDto.builder().destination("PoService").source("ProjectAssigment").eventDate(LocalDateTime.now())
-                                     .eventId(UUID.randomUUID().toString())
-                                     .eventData(projectDetails2).build();
+            EventDto poEvent = EventDto.builder().destination("PoService").source("ProjectAssigment")
+                    .eventDate(LocalDateTime.now())
+                    .eventId(UUID.randomUUID().toString())
+                    .eventData(projectDetails2).build();
 
-        eventemitter.send(poEvent);
+            eventemitter.send(poEvent);
 
-  return Response.ok(projectDetails2).build();
-        }
-        catch( WebApplicationException e) {
+            return Response.ok(projectDetails2).build();
+        } catch (WebApplicationException e) {
             return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
         }
     }
 
     @GET
     @Path("/viewProjectDetails")
-    @APIResponse(
-            responseCode = "200",
-            description = "Viewing All Project Details",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON,
-                    schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)
-            )
-    )
-     public Response getProjectDetails(){
-        List<ProjectDetails> projectDetails = service.getProjectDetails();
+    @APIResponse(responseCode = "200", description = "Viewing All Project Details", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)))
+    public Response getProjectDetails() {
+        List<ProjectLimitedDto> projectDetails = service.getProjectDetails();
         return Response.ok(projectDetails).build();
     }
 
     @GET
     @Path("/viewProjectDetailsById/{projectId}")
-    @APIResponse(
-            responseCode = "200",
-            description = "Viewing Project Details by projectId",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON,
-                    schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
-            )
-    )
-    public Response getProjectDetailsById(@PathParam("projectId") String projectId){
-        try{
+    @APIResponse(responseCode = "200", description = "Viewing Project Details by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
+    public Response getProjectDetailsById(@PathParam("projectId") String projectId) {
+        try {
             ProjectDetails projectDetails = service.getProjectDetailsById(projectId);
-        return Response.ok(projectDetails).build();
+            return Response.ok(projectDetails).build();
+        } catch (WebApplicationException e) {
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
         }
-        catch(WebApplicationException e){
+    }
+
+    @GET
+    @Path("/viewProjectDetailsByCategory/{projectType}")
+    @APIResponse(responseCode = "200", description = "Viewing Project Details by projectType", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)))
+    public Response getProjectDetailsByCategory(@PathParam("projectType") String projectType) {
+        try {
+            List<ProjectDetails> projectDetails = service.getProjectDetailsbyCategory(projectType);
+            return Response.ok(projectDetails).build();
+        } catch (WebApplicationException e) {
             return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
         }
     }
 
     @PUT
     @Path("/updateProjectDetails")
-    @APIResponse(
-        responseCode = "200",
-        description = "Updated Project Details mongodb document in the mongodb database by projectId",
-        content = @Content(
-                mediaType = MediaType.APPLICATION_JSON,
-                schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
-        )
-)
-    public Response updateProjectDetails(ProjectDetails dto){
-        try{
+    @APIResponse(responseCode = "200", description = "Updated Project Details mongodb document in the mongodb database by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
+    public Response updateProjectDetails(ProjectDetails dto) {
+        try {
             service.updateProjectDetails(dto);
             return Response.ok(dto).build();
-        }
-        catch(WebApplicationException e){
+        } catch (WebApplicationException e) {
             return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
         }
     }
+
     @DELETE
     @Path("/deleteProjectDetails/{projectId}")
-    @APIResponse(
-        responseCode = "204",
-        description = "Deleted a Project Details mongodb document in the mongodb database by projectId",
-        content = @Content(
-                mediaType = MediaType.APPLICATION_JSON,
-                schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)
-        )
-)
-    public void deleteProjectDetails(@PathParam("projectId") String projectId){
+    @APIResponse(responseCode = "204", description = "Deleted a Project Details mongodb document in the mongodb database by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
+    public void deleteProjectDetails(@PathParam("projectId") String projectId) {
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
-            service.deleteProjectDetails(projectId);
+        service.deleteProjectDetails(projectId);
 
-        
-}
+    }
 }
