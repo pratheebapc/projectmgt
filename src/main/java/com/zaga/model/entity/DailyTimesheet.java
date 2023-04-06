@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties("{id}")
+@JsonIgnoreProperties({"id"})
 @MongoEntity(collection = "DailyTimesheet", database = "ProjectManagement" )
 public class DailyTimesheet extends PanacheMongoEntity {
     
