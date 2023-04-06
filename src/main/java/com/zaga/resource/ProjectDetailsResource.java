@@ -22,8 +22,8 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
+// import org.eclipse.microprofile.reactive.messaging.Channel;
+// import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 
@@ -38,9 +38,9 @@ import com.zaga.service.ProjectDetailsService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProjectDetailsResource {
 
-    @Inject
-    @Channel("mail-out")
-    Emitter<EventDto> eventemitter;
+    // @Inject
+    // @Channel("mail-out")
+    // Emitter<EventDto> eventemitter;
 
     @Inject
     ProjectDetailsService service;
@@ -59,7 +59,7 @@ public class ProjectDetailsResource {
                     .eventId(UUID.randomUUID().toString())
                     .eventData(projectDetails2).build();
 
-            eventemitter.send(poEvent);
+            // eventemitter.send(poEvent);
 
             return Response.ok(projectDetails2).build();
         } catch (WebApplicationException e) {
