@@ -1,5 +1,7 @@
 package com.zaga.resource;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,14 +25,17 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.bson.types.Binary;
 // import org.eclipse.microprofile.reactive.messaging.Channel;
 // import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 
 import com.zaga.event.EventDto;
+import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
+import com.zaga.repository.PdfRepository;
 import com.zaga.service.ProjectDetailsService;
 
 @Tag(name = "Project Details", description = "CRUD Operations for Project Details")
@@ -44,6 +50,9 @@ public class ProjectDetailsResource {
 
     @Inject
     ProjectDetailsService service;
+
+    @Inject
+    PdfRepository repository;
 
     @POST
     @Path("/createProjectDetails")
@@ -118,5 +127,16 @@ public class ProjectDetailsResource {
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
         service.deleteProjectDetails(projectId);
 
+    }
+    @POST
+    @Path("/uploadPdfDocument")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response uploadPdfDocument(InputStream inputStream, @QueryParam("name") String name)
+            throws IOException {
+        PdfEntity pdfDocument = new PdfEntity();
+        pdfDocument.name = name;
+        pdfDocument.data = new Binary(inputStream.readAllBytes());
+        repository.persist(pdfDocument);
+        return Response.status(Response.Status.CREATED).build();
     }
 }

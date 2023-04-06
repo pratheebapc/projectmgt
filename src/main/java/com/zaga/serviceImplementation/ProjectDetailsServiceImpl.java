@@ -1,5 +1,7 @@
 package com.zaga.serviceImplementation;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +13,10 @@ import org.jboss.logging.Logger;
 
 import org.jboss.logging.Logger;
 
+import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
+import com.zaga.repository.PdfRepository;
 import com.zaga.repository.ProjectDetailsRepository;
 import com.zaga.repository.SequenceRepository;
 import com.zaga.service.ProjectDetailsService;
@@ -28,6 +32,9 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
     @Inject
     SequenceRepository seqRepo;
+
+    @Inject
+    PdfRepository pdfRepo;
 
     @Override
     public ProjectDetails createProjectDetails(ProjectDetails projectDetails) {
@@ -118,6 +125,15 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     public List<ProjectDetails> getProjectDetailsbyCategory(String category) {
         List<ProjectDetails> details = repo.getProjectDetailsByProjectType(category);
         return details;
+    }
+
+    @Override
+    public void savePdfDocument(String name, InputStream inputstream) throws IOException{
+      
+        logger.infof("Saving PDF document with name '%s'", name);
+        byte[] data = inputstream.readAllBytes();
+        PdfEntity pdfDocument = new PdfEntity();
+        pdfRepo.persist(pdfDocument);
     }
 
 }
