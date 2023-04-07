@@ -136,6 +136,10 @@ public class ProjectDetailsResource {
         PdfEntity pdfDocument = new PdfEntity();
         pdfDocument.name = name;
         pdfDocument.data = new Binary(inputStream.readAllBytes());
+
+        ProjectDetails details = new ProjectDetails();
+        details.getProjectId();
+
         repository.persist(pdfDocument);
         return Response.status(Response.Status.CREATED).build();
     }

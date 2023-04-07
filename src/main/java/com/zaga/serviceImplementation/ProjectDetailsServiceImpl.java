@@ -127,13 +127,6 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
         return details;
     }
 
-    @Override
-    public void savePdfDocument(String name, InputStream inputstream) throws IOException{
-      
-        logger.infof("Saving PDF document with name '%s'", name);
-        byte[] data = inputstream.readAllBytes();
-        PdfEntity pdfDocument = new PdfEntity();
-        pdfRepo.persist(pdfDocument);
-    }
+
 
 }

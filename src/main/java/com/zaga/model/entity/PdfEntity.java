@@ -20,9 +20,8 @@ import lombok.NoArgsConstructor;
 public class PdfEntity extends PanacheMongoEntityBase {
 
     public ObjectId id;
-    String documentId;
+    // String documentId;
     public String name;
     public Binary data;
-    public ProjectDetails projectDetails;
 
 }

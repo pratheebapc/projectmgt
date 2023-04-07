@@ -1,11 +1,9 @@
 package com.zaga.model.entity;
 
+import java.time.Duration;
 import java.time.LocalDate;
-
 import org.bson.types.ObjectId;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import io.quarkus.mongodb.panache.common.MongoEntity;
@@ -24,7 +22,7 @@ public class WeeklyTimesheet extends PanacheMongoEntity {
     public String projectId;
     public String employeeName;
     public String weeklyTimesheetId;
-    public String duration;
+    public Duration duration;
     public LocalDate startDate;
     public LocalDate endDate;
     public TimesheetType timesheetType;
