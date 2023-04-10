@@ -17,6 +17,11 @@ public class DailyTimesheetRepository implements PanacheMongoRepository<DailyTim
         
     }
 
+    // public DailyTimesheet getDailyTimesheetsByProjectId(String projectId){
+    //     PanacheQuery<DailyTimesheet> dt = DailyTimesheet.find("projectId=?1", projectId);
+    //     return dt.firstResult();
+    // }
+
     public void deleteDailyTimeSheetBydailyTimesheetId(String dailyTimesheetId){
         DailyTimesheet.delete("dailyTimesheetId=?1",dailyTimesheetId);
     }

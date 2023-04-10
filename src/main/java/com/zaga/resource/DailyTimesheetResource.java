@@ -60,6 +60,13 @@ public class DailyTimesheetResource {
      * @param dailyTimesheetId
      * @return view the particular daily time sheet (using id)
      */
+    @Path("/viewDailyTimesheetsByProjectId/{projectId}")
+    @GET
+    @APIResponse(responseCode = "200", description = "Viewing DailyTimesheets by Project Id", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = DailyTimesheet.class)))
+    public List<DailyTimesheet> getDailyTimesheetByProjectId(@PathParam("projectId") String projectId){
+        List<DailyTimesheet> dt = DailyTimesheet.list("projectId=?1", projectId);
+        return dt;
+    }
 
     @Path("/viewDailyTimeSheetBydailyTimeSheetID/{dailyTimesheetId}")
     @GET

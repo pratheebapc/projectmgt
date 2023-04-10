@@ -38,8 +38,8 @@ public class WeeklyTimesheetServiceImpl implements WeeklyTimesheetService {
     }
 
     @Override
-    public List<WeeklyTimesheet> getWeeklyTimesheetByType(String timesheetType) {
-        List<WeeklyTimesheet> timesheets = weeklyTimesheetRepository.getWeeklyTimesheetByType(timesheetType);
+    public List<WeeklyTimesheet> getWeeklyTimesheetByType(String timesheetType, String projectId) {
+        List<WeeklyTimesheet> timesheets = weeklyTimesheetRepository.getWeeklyTimesheetByType(timesheetType, projectId);
         return timesheets;
         
     }

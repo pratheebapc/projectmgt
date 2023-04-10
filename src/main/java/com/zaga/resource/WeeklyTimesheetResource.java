@@ -11,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -40,9 +41,9 @@ public class WeeklyTimesheetResource {
     }
 
     @GET
-    @Path("/getWeeklyTimesheet/weeklyTimesheetType}")
-    public List<WeeklyTimesheet> getWeeklyTimesheetByType(@PathParam("weeklyTimesheetType") String timesheetType) {
-        return service.getWeeklyTimesheetByType(timesheetType);
+    @Path("/getWeeklyTimesheet/{weeklyTimesheetType}")
+    public List<WeeklyTimesheet> getWeeklyTimesheetByType(@PathParam("weeklyTimesheetType") String timesheetType, @QueryParam("projectId") String projectId) {
+        return service.getWeeklyTimesheetByType(timesheetType,projectId);
     }
     
     @GET
