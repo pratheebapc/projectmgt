@@ -15,7 +15,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import com.zaga.client.PdfService;
 import com.zaga.model.entity.WeeklyTimesheet;
 import com.zaga.service.WeeklyTimesheetService;
 
@@ -27,6 +29,17 @@ public class WeeklyTimesheetResource {
 
     @Inject
     WeeklyTimesheetService service;
+
+    @Inject
+    @RestClient
+    PdfService pdfService;
+
+    
+    @POST
+    @Path("/creteTimesheet")
+    public TemplateInstance generateTimesheetPdf(WeeklyTimesheet weeklyTimesheet) {
+        return service.TimesheetTemplateGenerate(weeklyTimesheet);
+    }
     
     @POST
     @Path("/createWeeklyTimesheet")
