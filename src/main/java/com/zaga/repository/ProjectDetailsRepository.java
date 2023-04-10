@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
@@ -23,6 +24,7 @@ public class ProjectDetailsRepository implements PanacheMongoRepository<ProjectD
 
         return details;
     }
+
 
     public ProjectDetails checkProjectDetails(ProjectDetails projectDetails) {
         System.out.println("ProjectDetails checkProjectDetails--------------------------" + projectDetails);

@@ -23,11 +23,12 @@ public class WeeklyTimesheet extends PanacheMongoEntity {
     public ObjectId id;
     public String projectId;
     public String employeeName;
+    public String employeeRole;
+    public String clientName;
     public String weeklyTimesheetId;
     public String duration;
     public LocalDate startDate;
     public LocalDate endDate;
-    public TimesheetType timesheetType;
-   
+    public TimesheetType timesheetType;   
     
 }

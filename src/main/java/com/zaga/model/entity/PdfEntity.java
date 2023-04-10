@@ -1,5 +1,7 @@
 package com.zaga.model.entity;
 
+import java.time.LocalDate;
+
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 
@@ -20,9 +22,11 @@ import lombok.NoArgsConstructor;
 public class PdfEntity extends PanacheMongoEntityBase {
 
     public ObjectId id;
-    String documentId;
-    public String name;
+    public String projectId;
+    public String documentId;
+    public String projectName;
     public Binary data;
-    public ProjectDetails projectDetails;
+    public LocalDate startDate;
+    public LocalDate endDate;
 
 }

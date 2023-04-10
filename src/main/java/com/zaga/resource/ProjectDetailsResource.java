@@ -2,6 +2,7 @@ package com.zaga.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import lombok.Builder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,10 +23,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.reactive.common.jaxrs.ResponseImpl;
 import org.bson.types.Binary;
 // import org.eclipse.microprofile.reactive.messaging.Channel;
 // import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -36,6 +40,7 @@ import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
 import com.zaga.repository.PdfRepository;
+import com.zaga.repository.SequenceRepository;
 import com.zaga.service.ProjectDetailsService;
 
 @Tag(name = "Project Details", description = "CRUD Operations for Project Details")
@@ -53,6 +58,9 @@ public class ProjectDetailsResource {
 
     @Inject
     PdfRepository repository;
+
+    @Inject
+    SequenceRepository sequenceRepository;
 
     @POST
     @Path("/createProjectDetails")
@@ -131,12 +139,48 @@ public class ProjectDetailsResource {
     @POST
     @Path("/uploadPdfDocument")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    public Response uploadPdfDocument(InputStream inputStream, @QueryParam("name") String name)
+    public Response uploadPdfDocument(InputStream inputStream, @QueryParam("projectName") String projectName,@QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate, @QueryParam("endDate") LocalDate endDate)
             throws IOException {
+        // ProjectDetails projectDetails = new ProjectDetails();
         PdfEntity pdfDocument = new PdfEntity();
-        pdfDocument.name = name;
+        StringBuilder DocId = new StringBuilder();
+        DocId.append(projectName);
+        DocId.append("_");
+        DocId.append(startDate);
+        DocId.append("_");
+        DocId.append(endDate);
+        // String seqNo = sequenceRepository.getSequenceCounter("ApprovedTimesheet");
+        pdfDocument.setDocumentId(DocId.toString());
+        pdfDocument.projectId = projectId;
+        pdfDocument.projectName = projectName;
+        pdfDocument.startDate = startDate;
+        pdfDocument.endDate = endDate;
         pdfDocument.data = new Binary(inputStream.readAllBytes());
+        // pdfDocument.setDocumentId(projectDetails.getProjectId());
         repository.persist(pdfDocument);
         return Response.status(Response.Status.CREATED).build();
     }
-}
+
+    @GET
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("/{projectId}")
+    public Response viewPdfDocument(@PathParam("projectId") String projectId) {
+        try {
+            List<PdfEntity> pdf = repository.viewPdfDocumentByProjectId(projectId);
+            return Response.ok(pdf).build();
+        } catch (WebApplicationException e) {
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("/{documentId}")
+    public PdfEntity viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
+        try {
+            PdfEntity pdf = repository.viewPdfDocumentByDocumentId(documentId);
+            return pdf;
+        } catch (WebApplicationException e) {
+            return null;
+        }
+    }}

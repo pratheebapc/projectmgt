@@ -23,7 +23,7 @@ public interface ProjectDetailsService {
 
     Boolean canCreate(ProjectDetails projectDetails);
 
-    void savePdfDocument(String name, InputStream inputstream) throws IOException ;
+    // void savePdfDocument(String name, InputStream inputstream) throws IOException ;
 
     // ProjectDetails viewProjectDetails(ProjectDetails projectDetails);}
 }

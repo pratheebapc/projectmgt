@@ -62,5 +62,6 @@ public class ProjectDetails extends PanacheMongoEntity {
 
     // ProjectType
     public ProjectType projectType;
+  
 
 }
