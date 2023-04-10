@@ -36,7 +36,7 @@ public class WeeklyTimesheetResource {
 
     
     @POST
-    @Path("/creteTimesheet")
+    @Path("/createTimesheet")
     public TemplateInstance generateTimesheetPdf(WeeklyTimesheet weeklyTimesheet) {
         return service.TimesheetTemplateGenerate(weeklyTimesheet);
     }
