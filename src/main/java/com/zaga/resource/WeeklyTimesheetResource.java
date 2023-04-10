@@ -20,7 +20,7 @@ import com.zaga.model.entity.WeeklyTimesheet;
 import com.zaga.service.WeeklyTimesheetService;
 
 @Tag (name = "Weekly Timesheet", description = "CRUD Operations for Project Details")
-@Path("/zaga/projectManagement/weeklyTimesheet")
+@Path("/weeklyTimesheet")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class WeeklyTimesheetResource {
@@ -45,9 +45,15 @@ public class WeeklyTimesheetResource {
     public List<WeeklyTimesheet> getWeeklyTimesheetByType(@PathParam("weeklyTimesheetType") String timesheetType, @QueryParam("projectId") String projectId) {
         return service.getWeeklyTimesheetByType(timesheetType,projectId);
     }
+
+    @GET
+    @Path("/getWeeklyTimesheetByProjectId/{projectId}")
+    public List<WeeklyTimesheet> getWeeklyTimesheetByProjectId(@PathParam("projectId") String projectId) {
+        return service.getWeeklyTimesheetsByProjectId(projectId);
+    }
     
     @GET
-    @Path("/getWeeklyTimesheet/{weeklyTimesheetId}")
+    @Path("/getWeeklyTimesheetByWeeklyTimesheetId/{weeklyTimesheetId}")
     public WeeklyTimesheet getWeeklyTimesheetById(@PathParam("weeklyTimesheetId") String timesheetId) {
         return service.getWeeklyTimesheetById(timesheetId);
     }

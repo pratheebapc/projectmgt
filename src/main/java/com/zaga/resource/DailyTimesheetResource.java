@@ -25,7 +25,7 @@ import com.zaga.repository.DailyTimesheetRepository;
 import com.zaga.service.DailyTimesheetService;
 
 @Tag(name = "Daily Time Sheet", description = "CRUD Operations for Daily Time Sheet")
-@Path("/zaga/projectManagement")
+@Path("/dailyTimesheet")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class DailyTimesheetResource {

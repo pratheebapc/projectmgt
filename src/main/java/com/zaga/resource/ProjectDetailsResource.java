@@ -44,7 +44,7 @@ import com.zaga.repository.SequenceRepository;
 import com.zaga.service.ProjectDetailsService;
 
 @Tag(name = "Project Details", description = "CRUD Operations for Project Details")
-@Path("/zaga/projectManagement")
+@Path("/projectDetails")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProjectDetailsResource {

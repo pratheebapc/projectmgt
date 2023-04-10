@@ -9,6 +9,8 @@ public interface WeeklyTimesheetService {
     WeeklyTimesheet createWeeklyTimesheet(WeeklyTimesheet weeklyTimesheet);
     
     List<WeeklyTimesheet> getWeeklyTimesheets();
+    
+    List<WeeklyTimesheet> getWeeklyTimesheetsByProjectId(String projectId);
 
     List<WeeklyTimesheet> getWeeklyTimesheetByType(String timesheetType, String projectId);
 

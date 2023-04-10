@@ -64,4 +64,11 @@ public class WeeklyTimesheetServiceImpl implements WeeklyTimesheetService {
         weeklyTimesheet2.delete();
         return weeklyTimesheet2;
     }
+
+    @Override
+    public List<WeeklyTimesheet> getWeeklyTimesheetsByProjectId(String projectId) {
+        // TODO Auto-generated method stub
+       List<WeeklyTimesheet> result = WeeklyTimesheet.list("projectId=?1", projectId);
+       return result;
+    }
 }
