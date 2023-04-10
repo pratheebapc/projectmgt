@@ -156,7 +156,10 @@ public class ProjectDetailsResource {
         pdfDocument.startDate = startDate;
         pdfDocument.endDate = endDate;
         pdfDocument.data = new Binary(inputStream.readAllBytes());
-        // pdfDocument.setDocumentId(projectDetails.getProjectId());
+
+        // ProjectDetails details = new ProjectDetails();
+        // details.getProjectId();
+
         repository.persist(pdfDocument);
         return Response.status(Response.Status.CREATED).build();
     }
