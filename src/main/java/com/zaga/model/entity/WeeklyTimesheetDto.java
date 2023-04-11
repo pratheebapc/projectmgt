@@ -18,5 +18,6 @@ public class WeeklyTimesheetDto {
     public LocalDate startDate;
     public LocalDate endDate;
     public List<DailyTimesheet> timesheets;
+    public Float totalHours;
     public TimesheetType timesheetType;
 }
