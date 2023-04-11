@@ -54,24 +54,28 @@ public class WeeklyTimesheetResource {
 
     @POST
     @Path("/createTimesheet")
-    public Response generateTimesheetPdf(WeeklyTimesheet weeklyTimesheet) throws IOException {
+    public Response generateTimesheetPdf(@QueryParam("projectName") String projectName,
+            @QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate,
+            @QueryParam("endDate") LocalDate endDate) throws IOException {
 
         try {
             PdfEntity pdfDocument = new PdfEntity();
             StringBuilder DocId = new StringBuilder();
-            DocId.append(weeklyTimesheet.getProjectName());
+            DocId.append(projectName);
             DocId.append("_");
-            DocId.append(weeklyTimesheet.getStartDate());
+            DocId.append(startDate);
             DocId.append("_");
-            DocId.append(weeklyTimesheet.getEndDate());
+            DocId.append(endDate);
 
             pdfDocument.setDocumentId(DocId.toString());
-            pdfDocument.projectId = weeklyTimesheet.getProjectId();
-            pdfDocument.projectName = weeklyTimesheet.getProjectName();
-            pdfDocument.startDate = weeklyTimesheet.getStartDate();
-            pdfDocument.endDate = weeklyTimesheet.getEndDate();
+            pdfDocument.projectId = projectId;
+            pdfDocument.projectName = projectName;
+            pdfDocument.startDate = startDate;
+            pdfDocument.endDate = endDate;
 
-            Response response = pdfService.generateTimesheetPdf(weeklyTimesheet);
+            WeeklyTimesheet timesheetpdf = service.generateWeeeklyTimesheet(projectId, startDate, endDate);
+
+            Response response = pdfService.generateTimesheetPdf(timesheetpdf);
 
             byte[] pdfBytes = response.readEntity(byte[].class);
             InputStream inputStream = new ByteArrayInputStream(pdfBytes);

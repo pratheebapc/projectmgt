@@ -50,10 +50,10 @@ public class ProjectDetails extends PanacheMongoEntity {
     public String from; // companyAddress
     public String to; // clientAddress
     public String serviceDescription;
-    public Float totalManDays;
-    public Float unitPrice;
+    public Float totalManDays; // changed fieldname
+    public Float unitPrice; // changed fieldname
     public Currency clientCurrency;
-    public Float totalAmount;
+    public Float totalAmount; // changed datatype
 
     // po datas
     public String po;
