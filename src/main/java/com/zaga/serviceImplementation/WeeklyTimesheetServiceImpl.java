@@ -90,6 +90,7 @@ public class WeeklyTimesheetServiceImpl implements WeeklyTimesheetService {
                 .collect(Collectors.toList());
 
         result.setTimesheets(filteredData);
+        System.out.println(result);
         return result;
     }
 }

@@ -26,7 +26,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import com.zaga.client.PdfService;
 import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.WeeklyTimesheet;
-import com.zaga.model.entity.WeeklyTimesheetDto;
+
 import com.zaga.repository.PdfRepository;
 import com.zaga.service.WeeklyTimesheetService;
 
@@ -59,28 +59,36 @@ public class WeeklyTimesheetResource {
             @QueryParam("endDate") LocalDate endDate) throws IOException {
 
         try {
+
+            // Create Pdf entity for uploading timesheet
             PdfEntity pdfDocument = new PdfEntity();
+
+            // Create Document Id by convention
             StringBuilder DocId = new StringBuilder();
             DocId.append(projectName);
             DocId.append("_");
             DocId.append(startDate);
             DocId.append("_");
             DocId.append(endDate);
-
+            // Setting PdfEntity properties
             pdfDocument.setDocumentId(DocId.toString());
             pdfDocument.projectId = projectId;
             pdfDocument.projectName = projectName;
             pdfDocument.startDate = startDate;
             pdfDocument.endDate = endDate;
-
+            // Generate WeeklyTimesheetbased on input start date and end date
             WeeklyTimesheet timesheetpdf = service.generateWeeeklyTimesheet(projectId, startDate, endDate);
-
+            // persist the weekly timesheet in weekytimesheet database
+            timesheetpdf.setWeeklyTimesheetId(DocId.toString());
+            WeeklyTimesheet.persist(timesheetpdf);
+            // Pdf file obtained from document service
             Response response = pdfService.generateTimesheetPdf(timesheetpdf);
 
             byte[] pdfBytes = response.readEntity(byte[].class);
             InputStream inputStream = new ByteArrayInputStream(pdfBytes);
 
             pdfDocument.setData(new Binary(inputStream.readAllBytes()));
+            // persist the pdf document
             repository.persist(pdfDocument);
             return Response.ok(pdfDocument).build();
 

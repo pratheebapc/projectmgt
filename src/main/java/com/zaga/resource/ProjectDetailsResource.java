@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
-import lombok.Builder;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.PATCH;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -23,12 +22,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.jboss.resteasy.reactive.common.jaxrs.ResponseImpl;
+
 import org.bson.types.Binary;
 // import org.eclipse.microprofile.reactive.messaging.Channel;
 // import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -136,10 +134,13 @@ public class ProjectDetailsResource {
         service.deleteProjectDetails(projectId);
 
     }
+
     @POST
     @Path("/uploadPdfDocument")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    public Response uploadPdfDocument(InputStream inputStream, @QueryParam("projectName") String projectName,@QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate, @QueryParam("endDate") LocalDate endDate)
+    public Response uploadPdfDocument(InputStream inputStream, @QueryParam("projectName") String projectName,
+            @QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate,
+            @QueryParam("endDate") LocalDate endDate)
             throws IOException {
         // ProjectDetails projectDetails = new ProjectDetails();
         PdfEntity pdfDocument = new PdfEntity();
@@ -186,4 +187,5 @@ public class ProjectDetailsResource {
         } catch (WebApplicationException e) {
             return null;
         }
-    }}
+    }
+}
