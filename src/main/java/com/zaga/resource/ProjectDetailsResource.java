@@ -178,7 +178,7 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{documentId}")
     public PdfEntity viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
         try {

@@ -3,6 +3,7 @@ package com.zaga.serviceImplementation;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -84,12 +85,34 @@ public class WeeklyTimesheetServiceImpl implements WeeklyTimesheetService {
     public WeeklyTimesheet generateWeeeklyTimesheet(String projectId, LocalDate startDate, LocalDate endDate) {
         WeeklyTimesheet result = new WeeklyTimesheet();
         List<DailyTimesheet> data = drepo.getDailyTimesheetsByProjectId(projectId);
+
+        System.out.println("-----------data" + data);
         List<DailyTimesheet> filteredData = data.stream()
                 .filter(timesheet -> timesheet.getDate().isAfter(startDate.minusDays(1))
                         && timesheet.getDate().isBefore(endDate.plusDays(1)))
                 .collect(Collectors.toList());
 
+        System.out.println("-----------filteredData" + filteredData);
+
+        Double sum = filteredData.stream()
+                .mapToDouble(DailyTimesheet::getHours)
+                .sum();
+
+        // System.out.println(sumss);
+        // Float sum = 0f;
+        // for (DailyTimesheet wt : filteredData) {
+        // sum += wt.getHours();
+        // }
+
+        System.out.println("-----sum" + sum);
+
+        System.out.println();
+
         result.setTimesheets(filteredData);
+        result.setProjectId(projectId);
+        result.setStartDate(startDate);
+        result.setEndDate(endDate);
+        result.setDuration(sum);
         System.out.println(result);
         return result;
     }
