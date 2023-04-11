@@ -58,7 +58,19 @@ public class WeeklyTimesheetResource {
 
         try {
             PdfEntity pdfDocument = new PdfEntity();
-            pdfDocument.setProjectId("");
+            StringBuilder DocId = new StringBuilder();
+        DocId.append(weeklyTimesheet.getProjectName());
+        DocId.append("_");
+        DocId.append(weeklyTimesheet.getStartDate());
+        DocId.append("_");
+        DocId.append(weeklyTimesheet.getEndDate());
+        // String seqNo = sequenceRepository.getSequenceCounter("ApprovedTimesheet");
+        pdfDocument.setDocumentId(DocId.toString());
+        pdfDocument.projectId = weeklyTimesheet.getProjectId();
+        pdfDocument.projectName = weeklyTimesheet.getProjectName();
+        pdfDocument.startDate = weeklyTimesheet.getStartDate();
+        pdfDocument.endDate = weeklyTimesheet.getEndDate();
+            
 
             Response response = pdfService.generateTimesheetPdf(weeklyTimesheet);
 

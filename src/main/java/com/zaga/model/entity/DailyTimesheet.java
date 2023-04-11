@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"id"})
-@MongoEntity(collection = "DailyTimesheet", database = "ProjectManagement" )
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "DailyTimesheet", database = "ProjectManagement")
 public class DailyTimesheet extends PanacheMongoEntity {
-    
+
     public ObjectId id;
     public String projectId;
     public String dailyTimesheetId;
     public String projectName;
-    public String duration;
+    public Float hours;
     public String date;
     public String supportTicket;
     public List<String> clientOwners;
