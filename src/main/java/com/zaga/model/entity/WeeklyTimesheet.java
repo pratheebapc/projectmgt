@@ -27,7 +27,7 @@ public class WeeklyTimesheet extends PanacheMongoEntity {
     public String employeeRole;
 
     public String weeklyTimesheetId;
-    public String duration;
+    public Float duration;
     public LocalDate startDate;
     public LocalDate endDate;
     public List<DailyTimesheet> timesheets;
