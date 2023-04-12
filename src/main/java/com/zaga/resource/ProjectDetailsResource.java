@@ -36,6 +36,7 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 
 import com.zaga.event.EventDto;
+import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
@@ -142,7 +143,7 @@ public class ProjectDetailsResource {
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response uploadPdfDocument(InputStream inputStream, @QueryParam("projectName") String projectName,
             @QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate,
-            @QueryParam("endDate") LocalDate endDate)
+            @QueryParam("endDate") LocalDate endDate, @QueryParam("documentType") DocumentType documentType)
             throws IOException {
         // ProjectDetails projectDetails = new ProjectDetails();
         PdfEntity pdfDocument = new PdfEntity();
@@ -158,6 +159,7 @@ public class ProjectDetailsResource {
         pdfDocument.projectName = projectName;
         pdfDocument.startDate = startDate;
         pdfDocument.endDate = endDate;
+        pdfDocument.documentType = documentType;
         pdfDocument.data = new Binary(inputStream.readAllBytes());
 
         // ProjectDetails details = new ProjectDetails();
@@ -168,7 +170,7 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/document/list/{projectId}")
     public Response viewPdfDocument(@PathParam("projectId") String projectId) {
         try {
@@ -180,7 +182,7 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/document/listByType/{projectId}")
     public Response viewPdfDocuments(@PathParam("projectId") String projectId,
             @QueryParam("documentType") String documentType) {

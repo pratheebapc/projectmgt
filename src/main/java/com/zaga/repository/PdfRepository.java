@@ -18,7 +18,7 @@ public class PdfRepository implements PanacheMongoRepository<PdfEntity> {
     }
 
     public List<PdfEntity> viewPdfDocumentByProjectIdAndDocumentType(String projectId, String documentType) {
-        List<PdfEntity> details = PdfEntity.list("projectId=?1 and documentType=?2", projectId);
+        List<PdfEntity> details = PdfEntity.list("projectId=?1 and documentType=?2", projectId, documentType);
         return details;
     }
 
