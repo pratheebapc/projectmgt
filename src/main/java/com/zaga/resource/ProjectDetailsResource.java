@@ -181,21 +181,21 @@ public class ProjectDetailsResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{documentId}")
+    @Path("/document/{documentId}")
     public Response viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
 
-        System.out.println("----------------strted");
+        // System.out.println("----------------strted");
         try {
             PdfEntity pdf = repository.viewPdfDocumentByDocumentId(documentId);
-            String str = "data:application/pdf;base64" + Base64.getEncoder().encodeToString(pdf.getData().getData());
-            
-            // String result = 
-            // Binary bin =      new Binary(pdf.getData().getData());
+            String str = Base64.getEncoder().encodeToString(pdf.getData().getData());
+
+            // String result =
+            // Binary bin = new Binary(pdf.getData().getData());
             // System.out.println("--------------------------");
             // String str = new String(bin.getBytes()
 
             // System.out.println("-------------------------------");
-         System.out.println(str);
+            // System.out.println(str);
             return Response.ok(str).build();
         } catch (WebApplicationException e) {
             System.out.println("---------error");
