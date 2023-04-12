@@ -33,13 +33,6 @@ public class WeeklyTimesheetResource {
     @Inject
     @RestClient
     PdfService pdfService;
-
-    
-    @POST
-    @Path("/createTimesheet")
-    public TemplateInstance generateTimesheetPdf(WeeklyTimesheet weeklyTimesheet) {
-        return service.TimesheetTemplateGenerate(weeklyTimesheet);
-    }
     
     @POST
     @Path("/createWeeklyTimesheet")
