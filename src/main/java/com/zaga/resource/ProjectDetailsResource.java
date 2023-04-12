@@ -2,8 +2,10 @@ package com.zaga.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -177,13 +179,26 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/{documentId}")
-    public PdfEntity viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
+    public Response viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
+
+        System.out.println("----------------strted");
         try {
             PdfEntity pdf = repository.viewPdfDocumentByDocumentId(documentId);
-            return pdf;
+            String str = "data:application/pdf;base64" + Base64.getEncoder().encodeToString(pdf.getData().getData());
+            
+            // String result = 
+            // Binary bin =      new Binary(pdf.getData().getData());
+            // System.out.println("--------------------------");
+            // String str = new String(bin.getBytes()
+
+            // System.out.println("-------------------------------");
+         System.out.println(str);
+            return Response.ok(str).build();
         } catch (WebApplicationException e) {
+            System.out.println("---------error");
+            e.printStackTrace();
             return null;
         }
     }}
