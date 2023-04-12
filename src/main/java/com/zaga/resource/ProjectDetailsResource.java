@@ -169,7 +169,7 @@ public class ProjectDetailsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @Path("/{projectId}")
+    @Path("/document/list/{projectId}")
     public Response viewPdfDocument(@PathParam("projectId") String projectId) {
         try {
             List<PdfEntity> pdf = repository.viewPdfDocumentByProjectId(projectId);
@@ -180,13 +180,27 @@ public class ProjectDetailsResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("/document/listByType/{projectId}")
+    public Response viewPdfDocuments(@PathParam("projectId") String projectId,
+            @QueryParam("documentType") String documentType) {
+        try {
+            List<PdfEntity> pdf = repository.viewPdfDocumentByProjectIdAndDocumentType(projectId, documentType);
+            return Response.ok(pdf).build();
+        } catch (WebApplicationException e) {
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/document/{documentId}")
-    public Response viewPfDocumentByDocumentId(@PathParam("documentId") String documentId) {
+    public Response viewPfDocumentByDocumentId(@PathParam("documentId") String documentId,
+            @QueryParam("documentType") String documentType) {
 
         // System.out.println("----------------strted");
         try {
-            PdfEntity pdf = repository.viewPdfDocumentByDocumentId(documentId);
+            PdfEntity pdf = repository.viewPdfDocumentByDocumentId(documentId, documentType);
             String str = Base64.getEncoder().encodeToString(pdf.getData().getData());
 
             // String result =

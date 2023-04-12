@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"id"})
-@MongoEntity(collection="pdfs", database="ProjectManagement")
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "pdfs", database = "ProjectManagement")
 public class PdfEntity extends PanacheMongoEntityBase {
 
     public ObjectId id;
@@ -28,5 +28,6 @@ public class PdfEntity extends PanacheMongoEntityBase {
     public Binary data;
     public LocalDate startDate;
     public LocalDate endDate;
+    public DocumentType documentType;
 
 }
