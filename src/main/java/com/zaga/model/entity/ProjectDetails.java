@@ -39,8 +39,8 @@ public class ProjectDetails extends PanacheMongoEntity {
     public String clientAddress;
     public String clientEmail;
     public String duration; // reference for period
-    public String startDate;
-    public String endDate;
+    public LocalDate startDate;
+    public LocalDate endDate;
 
     // quote datas
     public String quoteStatus;
@@ -50,10 +50,10 @@ public class ProjectDetails extends PanacheMongoEntity {
     public String from; // companyAddress
     public String to; // clientAddress
     public String serviceDescription;
-    public String quantity;
-    public String unitPrice;
+    public Float totalManDays; // changed fieldname
+    public Float unitPrice; // changed fieldname
     public Currency clientCurrency;
-    public String totalAmount;
+    public Float totalAmount; // changed datatype
 
     // po datas
     public String po;
@@ -62,6 +62,5 @@ public class ProjectDetails extends PanacheMongoEntity {
 
     // ProjectType
     public ProjectType projectType;
-  
 
 }

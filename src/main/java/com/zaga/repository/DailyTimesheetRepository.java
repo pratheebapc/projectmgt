@@ -10,20 +10,20 @@ import io.quarkus.mongodb.panache.PanacheQuery;
 @ApplicationScoped
 public class DailyTimesheetRepository implements PanacheMongoRepository<DailyTimesheet> {
 
-    public DailyTimesheet getDailyTimeSheets(String dailyTimesheetId){
-        PanacheQuery<DailyTimesheet> id = DailyTimesheet.find("dailyTimesheetId=?1",dailyTimesheetId);
+    public DailyTimesheet getDailyTimeSheets(String dailyTimesheetId) {
+        PanacheQuery<DailyTimesheet> id = DailyTimesheet.find("dailyTimesheetId=?1", dailyTimesheetId);
         DailyTimesheet Idd = id.firstResult();
         return Idd;
-        
+
     }
 
-    // public DailyTimesheet getDailyTimesheetsByProjectId(String projectId){
-    //     PanacheQuery<DailyTimesheet> dt = DailyTimesheet.find("projectId=?1", projectId);
-    //     return dt.firstResult();
-    // }
-
-    public void deleteDailyTimeSheetBydailyTimesheetId(String dailyTimesheetId){
-        DailyTimesheet.delete("dailyTimesheetId=?1",dailyTimesheetId);
+    public List<DailyTimesheet> getDailyTimesheetsByProjectId(String projectId) {
+        List<DailyTimesheet> dt = DailyTimesheet.list("projectId=?1", projectId);
+        return dt;
     }
-    
+
+    public void deleteDailyTimeSheetBydailyTimesheetId(String dailyTimesheetId) {
+        DailyTimesheet.delete("dailyTimesheetId=?1", dailyTimesheetId);
+    }
+
 }
