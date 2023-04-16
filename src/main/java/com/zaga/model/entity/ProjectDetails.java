@@ -1,21 +1,17 @@
 package com.zaga.model.entity;
 
 import java.time.LocalDate;
-import java.util.*;
-
 import org.bson.types.ObjectId;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties({ "id" })
 @MongoEntity(collection = "ProjectDetails", database = "ProjectManagement")
 public class ProjectDetails extends PanacheMongoEntity {
@@ -63,4 +59,5 @@ public class ProjectDetails extends PanacheMongoEntity {
     // ProjectType
     public ProjectType projectType;
 
+    public ProjectDetails() {}
 }

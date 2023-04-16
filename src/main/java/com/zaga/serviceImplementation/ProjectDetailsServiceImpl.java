@@ -1,19 +1,12 @@
 package com.zaga.serviceImplementation;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
-
-import org.jboss.logging.Logger;
-
-import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
 import com.zaga.repository.PdfRepository;

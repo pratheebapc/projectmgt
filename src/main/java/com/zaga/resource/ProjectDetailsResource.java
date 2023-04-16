@@ -2,19 +2,15 @@ package com.zaga.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
-
 import javax.inject.Inject;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -24,17 +20,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
 import org.bson.types.Binary;
-// import org.eclipse.microprofile.reactive.messaging.Channel;
-// import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
-
 import com.zaga.event.EventDto;
 import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
@@ -64,8 +55,9 @@ public class ProjectDetailsResource {
     SequenceRepository sequenceRepository;
 
     @POST
-    @Path("/createProjectDetails")
-    @APIResponse(responseCode = "200", description = "Created a new project details mongodb document in the mongodb collection - Project Details", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
+    @APIResponse(responseCode = "200",
+            description = "Created a new project details mongodb document in the mongodb collection - Project Details",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
     public Response createProjectDetails(ProjectDetails projectDetails) {
         try {
             System.out.println("--------------ProjectDetails" + projectDetails);
@@ -86,7 +78,6 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Path("/viewProjectDetails")
     @APIResponse(responseCode = "200", description = "Viewing All Project Details", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)))
     public Response getProjectDetails() {
         List<ProjectLimitedDto> projectDetails = service.getProjectDetails();
@@ -94,7 +85,7 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Path("/viewProjectDetailsById/{projectId}")
+    @Path("/byId/{projectId}")
     @APIResponse(responseCode = "200", description = "Viewing Project Details by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
     public Response getProjectDetailsById(@PathParam("projectId") String projectId) {
         try {
@@ -106,7 +97,7 @@ public class ProjectDetailsResource {
     }
 
     @GET
-    @Path("/viewProjectDetailsByCategory/{projectType}")
+    @Path("/byCategory/{projectType}")
     @APIResponse(responseCode = "200", description = "Viewing Project Details by projectType", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.ARRAY, implementation = ProjectDetails.class)))
     public Response getProjectDetailsByCategory(@PathParam("projectType") String projectType) {
         try {
@@ -118,7 +109,6 @@ public class ProjectDetailsResource {
     }
 
     @PUT
-    @Path("/updateProjectDetails")
     @APIResponse(responseCode = "200", description = "Updated Project Details mongodb document in the mongodb database by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
     public Response updateProjectDetails(ProjectDetails dto) {
         try {
@@ -130,7 +120,7 @@ public class ProjectDetailsResource {
     }
 
     @DELETE
-    @Path("/deleteProjectDetails/{projectId}")
+    @Path("/{projectId}")
     @APIResponse(responseCode = "204", description = "Deleted a Project Details mongodb document in the mongodb database by projectId", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = ProjectDetails.class)))
     public void deleteProjectDetails(@PathParam("projectId") String projectId) {
         // ProjectDetails.findByIdOptional(projectId).ifPresent(p -> p.delete());
@@ -139,7 +129,7 @@ public class ProjectDetailsResource {
     }
 
     @POST
-    @Path("/uploadPdfDocument")
+    @Path("/document")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response uploadPdfDocument(InputStream inputStream, @QueryParam("projectName") String projectName,
             @QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate,
@@ -171,7 +161,7 @@ public class ProjectDetailsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/document/list/{projectId}")
+    @Path("/document/{projectId}")
     public Response viewPdfDocument(@PathParam("projectId") String projectId) {
         try {
             List<PdfEntity> pdf = repository.viewPdfDocumentByProjectId(projectId);
@@ -183,7 +173,7 @@ public class ProjectDetailsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/document/listByType/{projectId}")
+    @Path("/document/byType/{projectId}")
     public Response viewPdfDocuments(@PathParam("projectId") String projectId,
             @QueryParam("documentType") String documentType) {
         try {
