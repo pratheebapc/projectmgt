@@ -3,11 +3,6 @@ package com.zaga.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfig;
-import de.flapdoodle.embed.mongo.distribution.Version;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
@@ -23,20 +18,20 @@ import java.time.LocalDate;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProjectDetailsTest {
-    private static MongodExecutable mongodExe;
-    private static MongodProcess mongod;
+    private static MongoHelper mongoHelper;
     private static ObjectMapper mapper;
     private static String projectName;
     private ProjectDetails createResponse;
 
     @BeforeAll
     public static void setUp() throws Exception {
-        MongodStarter starter = MongodStarter.getDefaultInstance();
-        MongodConfig mongodConfig = MongodConfig.builder()
-                .version(Version.Main.V6_0)
-                .build();
-        mongodExe = starter.prepare(mongodConfig);
-        mongod = mongodExe.start();
+        mongoHelper = new MongoHelper();
+        mongoHelper.startDB();
+        mongoHelper.loadCollection(
+            "ProjectManagement",
+            "counter",
+            "fixtures/ProjectManagement/counter.json"
+        );
 
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -46,8 +41,7 @@ public class ProjectDetailsTest {
 
     @AfterAll
     public static void tearDown() throws Exception {
-        mongod.stop();
-        mongodExe.stop();
+        mongoHelper.stopDB();
     }
 
     private String creationResponse() {
@@ -95,6 +89,7 @@ public class ProjectDetailsTest {
     }
 
     @Test
+    @Order(3)
     void getProjectDetailsApiTest() {
         RestAssured.given()
             .when()
@@ -148,7 +143,7 @@ public class ProjectDetailsTest {
      }
 
      @Test
-     @Order(3)
+     @Order(4)
      void deleteProjectDetailsApiTest() {
          RestAssured.given()
              .contentType(ContentType.JSON)
