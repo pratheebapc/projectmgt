@@ -28,6 +28,7 @@ public class MongoHelper {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         MongoCmdOptions cmdOptions = MongoCmdOptions.builder().useNoJournal(false).build();
         MongodConfig mongodConfig = MongodConfig.builder()
+                .stopTimeoutInMillis(120000L)
                 .net(net)
                 .cmdOptions(cmdOptions)
                 .version(version)
