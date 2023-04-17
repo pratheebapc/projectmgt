@@ -11,8 +11,11 @@ import de.flapdoodle.embed.mongo.distribution.IFeatureAwareVersion;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 public class MongoHelper {
     private MongodExecutable mongodExe;
@@ -42,42 +45,43 @@ public class MongoHelper {
         File jsonFile = new File(fixturePath);
 
         MongoImportConfig mongoImportConfig = MongoImportConfig.builder()
-            .version(version)
-            .net(net)
-            .databaseName(dbName)
-            .collectionName(collection)
-            .isUpsertDocuments(true)
-            .isDropCollection(true)
-            .isJsonArray(true)
-            .importFile(jsonFile.getAbsolutePath())
-            .build();
+                .version(version)
+                .net(net)
+                .databaseName(dbName)
+                .collectionName(collection)
+                .isUpsertDocuments(true)
+                .isDropCollection(true)
+                .isJsonArray(true)
+                .importFile(jsonFile.getAbsolutePath())
+                .build();
 
         MongoImportExecutable exec = MongoImportStarter
-            .getDefaultInstance()
-            .prepare(mongoImportConfig);
+                .getDefaultInstance()
+                .prepare(mongoImportConfig);
+
+        // MongoImportProcess mongoImportProcess = exec.start();
+        // mongoImportProcess.stop();
+        // exec.stop();
 
         MongoImportProcess mongoImportProcess = exec.start();
-        mongoImportProcess.stop();
+        try {
+            mongoImportProcess.waitFor();
+        } catch (InterruptedException e) {
+
+            System.err.println("Error whith the import process: " + e.getMessage());
+        } finally {
+
+            mongoImportProcess.stop();
+            exec.stop();
+
+        }
     }
 
     void stopDB() {
 
-        try {
-            mongod.stop();
-        } catch (IllegalStateException e) {
-            if (mongod != null) {
-                await().atMost(1, TimeUnit.MINUTES).until(() -> !mongod.isProcessRunning());
-            } else {
-                throw new IllegalStateException(e);
-            }
-        }
+        mongod.stop();
 
-        if (mongodExe != null) {
-            try {
-                mongodExe.stop();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
+        mongodExe.stop();
+
     }
 }
