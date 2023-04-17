@@ -1,5 +1,7 @@
 package com.zaga.rest;
 
+import static org.awaitility.Awaitility.await;
+
 import de.flapdoodle.embed.mongo.*;
 import de.flapdoodle.embed.mongo.config.MongoCmdOptions;
 import de.flapdoodle.embed.mongo.config.MongoImportConfig;
@@ -9,12 +11,14 @@ import de.flapdoodle.embed.mongo.distribution.IFeatureAwareVersion;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 
 public class MongoHelper {
     private MongodExecutable mongodExe;
     private MongodProcess mongod;
-    private Net net;
-    private IFeatureAwareVersion version = Version.Main.V6_0;
+    private final Net net;
+    private final IFeatureAwareVersion version = Version.Main.V6_0;
 
     public MongoHelper() {
         net = new Net(27017, false);
@@ -26,7 +30,7 @@ public class MongoHelper {
         MongodConfig mongodConfig = MongodConfig.builder()
                 .net(net)
                 .cmdOptions(cmdOptions)
-                .version(Version.Main.V6_0)
+                .version(version)
                 .build();
         mongodExe = starter.prepare(mongodConfig);
         mongod = mongodExe.start();
@@ -56,7 +60,23 @@ public class MongoHelper {
     }
 
     void stopDB() {
-        mongod.stop();
-        mongodExe.stop();
+
+        try {
+            mongod.stop();
+        } catch (IllegalStateException e) {
+            if (mongod != null) {
+                await().atMost(1, TimeUnit.MINUTES).until(() -> !mongod.isProcessRunning());
+            } else {
+                throw new IllegalStateException(e);
+            }
+        }
+
+        if (mongodExe != null) {
+            try {
+                mongodExe.stop();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
