@@ -1,9 +1,7 @@
 package com.zaga.repository;
 
 import javax.enterprise.context.ApplicationScoped;
-
 import com.zaga.model.entity.SequenceCounters;
-
 import io.quarkus.mongodb.panache.PanacheQuery;
 
 @ApplicationScoped

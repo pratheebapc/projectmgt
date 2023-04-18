@@ -18,8 +18,8 @@ public class WeeklyTimesheetRepository implements PanacheMongoRepository<WeeklyT
         return wt;
     }
 
-    public List<WeeklyTimesheet> getWeeklyTimesheetByType(String Type){
-        List<WeeklyTimesheet> timesheet = WeeklyTimesheet.list("timesheetType=?1", Type);
+    public List<WeeklyTimesheet> getWeeklyTimesheetByType(String Type, String projectId){
+        List<WeeklyTimesheet> timesheet = WeeklyTimesheet.list("timesheetType=?1 and projectId=?2", Type, projectId);
         return timesheet;
     }
 }
