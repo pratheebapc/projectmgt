@@ -21,7 +21,7 @@ jobs:
           architecture: x64
       
       - name: Bump version and push tag
-        uses: hennejg/github-tag-action@v4.1.jh1
+        uses: hennejg/github-tag-action@v4.4.0
         id: tag
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +31,6 @@ jobs:
         with:
           tag: ${{ steps.tag.outputs.new_tag }}
           generateReleaseNotes: true
-          bodyFile: "body.md"
       
       - name: Publish container image
         run: |
