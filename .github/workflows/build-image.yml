@@ -34,6 +34,8 @@ jobs:
       
       - name: Publish container image
         run: |
+          export IMAGE_REPO_USER=${{ secrets.IMAGE_REPO_USER }}
+          export IMAGE_REPO_PASS=${{ secrets.IMAGE_REPO_PASS }}
           ./mvnw install \
             -Dmaven.test.skip \
             -Dquarkus.profile=deliver \
