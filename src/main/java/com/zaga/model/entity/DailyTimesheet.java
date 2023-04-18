@@ -1,5 +1,6 @@
 package com.zaga.model.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -15,16 +16,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"id"})
-@MongoEntity(collection = "DailyTimesheet", database = "ProjectManagement" )
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "DailyTimesheet", database = "ProjectManagement")
 public class DailyTimesheet extends PanacheMongoEntity {
-    
+
     public ObjectId id;
     public String projectId;
     public String dailyTimesheetId;
     public String projectName;
-    public String duration;
-    public String date;
+    public Double hours;
+    public LocalDate date;
     public String supportTicket;
     public List<String> clientOwners;
     public List<String> redHatOwners;

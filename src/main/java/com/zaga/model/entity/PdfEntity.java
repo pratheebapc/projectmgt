@@ -1,13 +1,14 @@
 package com.zaga.model.entity;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
 
+import org.bson.types.Binary;
 import org.bson.types.ObjectId;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
-import io.quarkus.mongodb.panache.PanacheQuery;
+import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,21 +17,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties("{id}")
-@MongoEntity(collection = "WeeklyTimesheet", database = "ProjectManagement")
-public class WeeklyTimesheet extends PanacheMongoEntity {
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "pdfs", database = "ProjectManagement")
+public class PdfEntity extends PanacheMongoEntityBase {
 
     public ObjectId id;
     public String projectId;
-    public String employeeName;
+    public String documentId;
     public String projectName;
-    public String employeeRole;
-
-    public String weeklyTimesheetId;
-    public Double duration;
+    public Binary data;
     public LocalDate startDate;
     public LocalDate endDate;
-    public List<DailyTimesheet> timesheets;
-    public TimesheetType timesheetType;
+    public DocumentType documentType;
 
 }

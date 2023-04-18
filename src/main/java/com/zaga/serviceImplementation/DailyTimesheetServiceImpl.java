@@ -6,14 +6,12 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-
-
 import com.zaga.model.entity.DailyTimesheet;
 import com.zaga.repository.DailyTimesheetRepository;
 import com.zaga.service.DailyTimesheetService;
 
 @ApplicationScoped
-public class DailyTimesheetServiceImpl implements DailyTimesheetService{
+public class DailyTimesheetServiceImpl implements DailyTimesheetService {
 
     @Inject
     DailyTimesheetRepository repo;
@@ -22,6 +20,12 @@ public class DailyTimesheetServiceImpl implements DailyTimesheetService{
 
     @Override
     public DailyTimesheet createDailyTimesheet(DailyTimesheet dts) {
+
+        StringBuilder DocId = new StringBuilder();
+        DocId.append(dts.getProjectName());
+        DocId.append("_");
+        DocId.append(dts.getDate());
+        dts.setDailyTimesheetId(DocId.toString());
         DailyTimesheet.persist(dts);
         return dts;
     }
@@ -52,14 +56,16 @@ public class DailyTimesheetServiceImpl implements DailyTimesheetService{
     public void deleteDailyTimeSheetBydailyTimesheetId(String dailyTimesheetId) {
         repo.deleteDailyTimeSheetBydailyTimesheetId(dailyTimesheetId);
     }
-    
-/*@Override
-    public ProjectDetails getProjectDetailsById(String projectId) {
-        ProjectDetails projectDetails = repo.getProjectDetailsById(projectId);
-        if (projectDetails == null) {
-            throw new WebApplicationException("The Resource is empty ", 404);
-        }
-        return projectDetails;
-    } */
-    
-   }
+
+    /*
+     * @Override
+     * public ProjectDetails getProjectDetailsById(String projectId) {
+     * ProjectDetails projectDetails = repo.getProjectDetailsById(projectId);
+     * if (projectDetails == null) {
+     * throw new WebApplicationException("The Resource is empty ", 404);
+     * }
+     * return projectDetails;
+     * }
+     */
+
+}

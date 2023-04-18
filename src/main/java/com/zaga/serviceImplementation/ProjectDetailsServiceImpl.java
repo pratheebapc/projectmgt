@@ -6,13 +6,10 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
-
-import org.jboss.logging.Logger;
-
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectLimitedDto;
+import com.zaga.repository.PdfRepository;
 import com.zaga.repository.ProjectDetailsRepository;
 import com.zaga.repository.SequenceRepository;
 import com.zaga.service.ProjectDetailsService;
@@ -28,6 +25,9 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
     @Inject
     SequenceRepository seqRepo;
+
+    @Inject
+    PdfRepository pdfRepo;
 
     @Override
     public ProjectDetails createProjectDetails(ProjectDetails projectDetails) {
@@ -119,5 +119,7 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
         List<ProjectDetails> details = repo.getProjectDetailsByProjectType(category);
         return details;
     }
+
+   
 
 }
