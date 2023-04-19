@@ -24,6 +24,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.zaga.client.PdfService;
+import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
 import com.zaga.model.entity.WeeklyTimesheet;
 
@@ -42,7 +43,6 @@ public class WeeklyTimesheetResource {
     @Inject
     @RestClient
     PdfService pdfService;
-    
 
     @Inject
     PdfRepository repository;
@@ -57,7 +57,8 @@ public class WeeklyTimesheetResource {
     @Path("/createTimesheet")
     public Response generateTimesheetPdf(@QueryParam("projectName") String projectName,
             @QueryParam("projectId") String projectId, @QueryParam("startDate") LocalDate startDate,
-            @QueryParam("endDate") LocalDate endDate) throws IOException {
+            @QueryParam("endDate") LocalDate endDate, @QueryParam("documentType") String documentType)
+            throws IOException {
 
         try {
 
@@ -77,6 +78,7 @@ public class WeeklyTimesheetResource {
             pdfDocument.projectName = projectName;
             pdfDocument.startDate = startDate;
             pdfDocument.endDate = endDate;
+            pdfDocument.setDocumentType(DocumentType.valueOf(documentType));
             // Generate WeeklyTimesheetbased on input start date and end date
             WeeklyTimesheet timesheetpdf = service.generateWeeeklyTimesheet(projectId, startDate, endDate);
             // persist the weekly timesheet in weekytimesheet database

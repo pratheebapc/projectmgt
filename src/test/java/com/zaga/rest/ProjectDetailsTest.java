@@ -78,7 +78,7 @@ public class ProjectDetailsTest {
                                 .accept(ContentType.JSON)
                                 .body(json)
                                 .when()
-                                .post("/zaga/projectManagement/projectDetails");
+                                .post("/zaga/projectManagement/projectDetails/createProjectDetails");
                 String responseBody = response.getBody().asString();
                 createResponse = mapper.readValue(responseBody, ProjectDetails.class);
 
