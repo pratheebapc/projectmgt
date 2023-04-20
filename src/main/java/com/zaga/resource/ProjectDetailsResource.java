@@ -2,19 +2,15 @@ package com.zaga.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
-
 import javax.inject.Inject;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -24,17 +20,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
 import org.bson.types.Binary;
-// import org.eclipse.microprofile.reactive.messaging.Channel;
-// import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
-
 import com.zaga.event.EventDto;
 import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
@@ -183,7 +174,7 @@ public class ProjectDetailsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/document/listByType/{projectId}")
+    @Path("/document/listbyType/{projectId}")
     public Response viewPdfDocuments(@PathParam("projectId") String projectId,
             @QueryParam("documentType") String documentType) {
         try {
