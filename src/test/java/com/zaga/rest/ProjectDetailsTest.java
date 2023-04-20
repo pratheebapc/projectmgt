@@ -92,7 +92,7 @@ public class ProjectDetailsTest {
         void getProjectDetailsApiTest() {
                 RestAssured.given()
                                 .when()
-                                .get("/zaga/projectManagement/projectDetails")
+                                .get("/zaga/projectManagement/projectDetails/viewProjectDetails")
                                 .then()
                                 .statusCode(200);
         }
@@ -104,44 +104,44 @@ public class ProjectDetailsTest {
                                 .contentType(ContentType.JSON)
                                 .pathParam("projectId", createResponse.projectId)
                                 .when()
-                                .get("/zaga/projectManagement/projectDetails/byId/{projectId}")
+                                .get("/zaga/projectManagement/projectDetails/viewProjectDetailsById/{projectId}")
                                 .then()
                                 .statusCode(200);
         }
 
-        // @Test
-        // @Order(4)
-        // void updateProjectDetailsApiTest() {
-        // int arbitraryStart = 10;
-        // LocalDate startDate = LocalDate.now().minusDays(arbitraryStart);
-        // LocalDate endDate = LocalDate.now();
-        // ProjectDetails projectDetails = ProjectDetails.builder().id(null)
-        // // employee details
-        // .employeeName("sharamua").employeeEmail("").employeeNumber("")
-        // .employeeId("").employeeRole("")
-        // // project details
-        // .projectAssignmentStatus(false).projectManager("")
-        // .projectName(projectName).projectId(createResponse.projectId)
-        // // client details
-        // .clientName("").clientCountry("").clientTimezone("")
-        // .clientAddress("").clientEmail("")
-        // // miscellaneous
-        // .duration("").startDate(startDate).endDate(endDate)
-        // .quoteStatus("").quoteId("").date("").validDate("")
-        // .from(null).to(null).serviceDescription(null).totalManDays(null)
-        // .unitPrice(null).clientCurrency(Currency.EUR).totalAmount(0.0f)
-        // .po("").sfdc("").pa("").projectType(ProjectType.Active)
-        // .build();
+        @Test
+        @Order(4)
+        void updateProjectDetailsApiTest() {
+                int arbitraryStart = 10;
+                LocalDate startDate = LocalDate.now().minusDays(arbitraryStart);
+                LocalDate endDate = LocalDate.now();
+                ProjectDetails projectDetails = ProjectDetails.builder().id(null)
+                                // employee details
+                                .employeeName("sharamua").employeeEmail("").employeeNumber("")
+                                .employeeId("").employeeRole("")
+                                // project details
+                                .projectAssignmentStatus(false).projectManager("")
+                                .projectName(projectName).projectId(createResponse.projectId)
+                                // client details
+                                .clientName("").clientCountry("").clientTimezone("")
+                                .clientAddress("").clientEmail("")
+                                // miscellaneous
+                                .duration("").startDate(startDate).endDate(endDate)
+                                .quoteStatus("").quoteId("").date("").validDate("")
+                                .from(null).to(null).serviceDescription(null).totalManDays(null)
+                                .unitPrice(null).clientCurrency(Currency.EUR).totalAmount(0.0f)
+                                .po("").sfdc("").pa("").projectType(ProjectType.Active)
+                                .build();
 
-        // RestAssured.given()
-        // .contentType(ContentType.JSON)
-        // .accept(ContentType.JSON)
-        // .body(projectDetails)
-        // .when()
-        // .put("/zaga/projectManagement/projectDetails")
-        // .then()
-        // .statusCode(200);
-        // }
+                RestAssured.given()
+                                .contentType(ContentType.JSON)
+                                .accept(ContentType.JSON)
+                                .body(projectDetails)
+                                .when()
+                                .put("/zaga/projectManagement/projectDetails/updateProjectDetails")
+                                .then()
+                                .statusCode(200);
+        }
 
         @Test
         @Order(5)
@@ -150,7 +150,7 @@ public class ProjectDetailsTest {
                                 .contentType(ContentType.JSON)
                                 .pathParam("projectId", createResponse.projectId)
                                 .when()
-                                .delete("/zaga/projectManagement/projectDetails/{projectId}")
+                                .delete("/zaga/projectManagement/projectDetails/deleteProjectDetails/{projectId}")
                                 .then()
                                 .statusCode(204);
         }
