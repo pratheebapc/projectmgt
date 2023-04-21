@@ -214,11 +214,13 @@ public class ProjectDetailsResource {
         }
     }
 
-    @Delete
+    @DELETE
     @Path("/document/deleteById")
     public Response deleteByDocumentId(@QueryParam("documentId") String documentId,
             @QueryParam("documentType") String documentType) {
         try {
+
+            System.out.println(documentId + "-----------" + documentType);
 
             PdfEntity result = repository.viewPdfDocumentByDocumentId(documentId, documentType);
             result.delete();

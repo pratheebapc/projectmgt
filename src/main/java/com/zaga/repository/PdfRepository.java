@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
@@ -23,10 +24,11 @@ public class PdfRepository implements PanacheMongoRepository<PdfEntity> {
     }
 
     public PdfEntity viewPdfDocumentByDocumentId(String documentId, String documentType) {
-        // System.out.println("----------"+documentId);
-        PanacheQuery<PdfEntity> pdf = PdfEntity.find("documentId=?1 and documentType=?2", documentId, documentType);
+        System.out.println("----------" + documentId);
+        DocumentType dt = DocumentType.valueOf(documentType);
+        PanacheQuery<PdfEntity> pdf = PdfEntity.find("documentId=?1 and documentType=?2", documentId, dt);
         PdfEntity pd = pdf.firstResult();
-        // System.out.println("------"+pd);
+        System.out.println("------" + pd);
         return pd;
     }
 
