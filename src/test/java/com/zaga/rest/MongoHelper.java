@@ -1,7 +1,5 @@
 package com.zaga.rest;
 
-import static org.awaitility.Awaitility.await;
-
 import de.flapdoodle.embed.mongo.*;
 import de.flapdoodle.embed.mongo.config.MongoCmdOptions;
 import de.flapdoodle.embed.mongo.config.MongoImportConfig;
@@ -11,11 +9,6 @@ import de.flapdoodle.embed.mongo.distribution.IFeatureAwareVersion;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 
 public class MongoHelper {
     private MongodExecutable mongodExe;

@@ -56,9 +56,9 @@ public class ProjectDetailsTest {
                 ProjectDetails projectDetails = ProjectDetails.builder().id(null)
                                 // employee details
                                 .employeeName("sharamua").employeeEmail("").employeeNumber("")
-                                .employeeId("").employeeRole("")
+                                .employeeId("2").employeeRole("")
                                 // project details
-                                .projectAssignmentStatus(false).projectManager("")
+                                .projectAssignmentStatus(false).projectManager("").projectId("1")
                                 .projectName(projectName)
                                 // client details
                                 .clientName("").clientCountry("").clientTimezone("")
@@ -85,6 +85,8 @@ public class ProjectDetailsTest {
                 response
                                 .then()
                                 .statusCode(200);
+
+                System.out.println("---------" + createResponse);
         }
 
         @Test
@@ -111,14 +113,15 @@ public class ProjectDetailsTest {
 
         @Test
         @Order(4)
-        void updateProjectDetailsApiTest() {
+        void updateProjectDetailsApiTest() throws JsonProcessingException {
                 int arbitraryStart = 10;
                 LocalDate startDate = LocalDate.now().minusDays(arbitraryStart);
                 LocalDate endDate = LocalDate.now();
+
                 ProjectDetails projectDetails = ProjectDetails.builder().id(null)
                                 // employee details
                                 .employeeName("sharamua").employeeEmail("").employeeNumber("")
-                                .employeeId("").employeeRole("")
+                                .employeeId("2").employeeRole("")
                                 // project details
                                 .projectAssignmentStatus(false).projectManager("")
                                 .projectName(projectName).projectId(createResponse.projectId)
@@ -133,13 +136,13 @@ public class ProjectDetailsTest {
                                 .po("").sfdc("").pa("").projectType(ProjectType.Active)
                                 .build();
 
+                String json = mapper.writeValueAsString(projectDetails);
                 RestAssured.given()
                                 .contentType(ContentType.JSON)
                                 .accept(ContentType.JSON)
-                                .body(projectDetails)
+                                .body(json)
                                 .when()
-                                .put("/zaga/projectManagement/projectDetails/updateProjectDetails")
-                                .then()
+                                .put("/zaga/projectManagement/projectDetails/updateProjectDetails").then()
                                 .statusCode(200);
         }
 

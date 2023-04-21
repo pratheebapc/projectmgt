@@ -1,7 +1,6 @@
 package com.zaga.serviceImplementation;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,8 +14,6 @@ public class DailyTimesheetServiceImpl implements DailyTimesheetService {
 
     @Inject
     DailyTimesheetRepository repo;
-    // @Inject
-    // Logger logger;
 
     @Override
     public DailyTimesheet createDailyTimesheet(DailyTimesheet dts) {

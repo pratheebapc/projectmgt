@@ -1,7 +1,5 @@
 package com.zaga.service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import com.zaga.model.entity.ProjectDetails;
@@ -23,7 +21,8 @@ public interface ProjectDetailsService {
 
     Boolean canCreate(ProjectDetails projectDetails);
 
-    // void savePdfDocument(String name, InputStream inputstream) throws IOException ;
+    // void savePdfDocument(String name, InputStream inputstream) throws IOException
+    // ;
 
     // ProjectDetails viewProjectDetails(ProjectDetails projectDetails);}
 }
