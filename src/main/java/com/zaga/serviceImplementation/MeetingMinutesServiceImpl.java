@@ -60,7 +60,7 @@ public class MeetingMinutesServiceImpl implements MeetingMinutesService {
     
    @Override
    public MeetingMinutes createMeetingMinutes(MeetingMinutes meetingMinutes) {
-      String seqno = seqRepo.getSquenceCounter("MeetingMinutes");
+      String seqno = seqRepo.getSequenceCounter("MeetingMinutes");
       meetingMinutes.setMeetingMinutesId(seqno);
       MeetingMinutes.persist(meetingMinutes);
       return meetingMinutes;
