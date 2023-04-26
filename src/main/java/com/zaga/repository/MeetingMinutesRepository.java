@@ -1,9 +1,12 @@
 package com.zaga.repository;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import com.zaga.model.entity.MeetingMinutes;
 
+// import io.quarkus.arc.lookup.LookupIfProperty.List;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 
@@ -11,9 +14,10 @@ import io.quarkus.mongodb.panache.PanacheQuery;
 public class MeetingMinutesRepository implements PanacheMongoRepository<MeetingMinutes>{
 
 
-    public MeetingMinutes getMeetingMinutesById(String projectId) {
-      PanacheQuery<MeetingMinutes> minutes = MeetingMinutes.find("projectId = ?1",projectId);
-      return minutes.firstResult();}
+    public List<MeetingMinutes> getMeetingMinutesById(String projectId) {
+      List<MeetingMinutes> minutes = MeetingMinutes.list("projectId = ?1",projectId);
+      return minutes;
+    }
     public void deleteMeetingMinutesByMeetingMinutesId(String meetingMinutesId){
         PanacheQuery<MeetingMinutes> meetingMinute = MeetingMinutes.find("meetingMinutesId = ?1", meetingMinutesId);
         MeetingMinutes mm = meetingMinute.firstResult();
@@ -21,8 +25,10 @@ public class MeetingMinutesRepository implements PanacheMongoRepository<MeetingM
     }
     
     public MeetingMinutes getMeetingMinutesByMeetingMinutesId(String meetingMinutesId){
+        System.out.println(meetingMinutesId);
         PanacheQuery<MeetingMinutes> meetingMinute = MeetingMinutes.find("meetingMinutesId = ?1", meetingMinutesId);
         MeetingMinutes mm = meetingMinute.firstResult();
+        System.out.println("------repo------"+mm);
         return mm;
     }
     

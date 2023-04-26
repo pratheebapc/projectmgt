@@ -8,7 +8,7 @@ import javax.ws.rs.WebApplicationException;
 
 import org.jboss.logging.Logger;
 
-import com.zaga.model.dto.UpdateMeetingMinutesDto;
+// import com.zaga.model.dto.UpdateMeetingMinutesDto;
 import com.zaga.model.entity.MeetingMinutes;
 import com.zaga.repository.MeetingMinutesRepository;
 import com.zaga.repository.SequenceRepository;
@@ -45,12 +45,12 @@ public class MeetingMinutesServiceImpl implements MeetingMinutesService {
     }
 
     @Override
-    public MeetingMinutes getMeetingMinuteById(String projectId) {
+    public MeetingMinutes getMeetingMinuteByMeetingMinutesId(String meetingMinutesId) {
        
-        if (projectId == null){
-            throw new WebApplicationException("ProjectId is Invalid ",400);
+        if (meetingMinutesId == null){
+            throw new WebApplicationException("MeetingMinutesId is Invalid ",400);
         }
-        MeetingMinutes meetingminutes = repo.getMeetingMinutesById(projectId);
+        MeetingMinutes meetingminutes = repo.getMeetingMinutesByMeetingMinutesId(meetingMinutesId);
         if (meetingminutes == null){
             throw new WebApplicationException("The Resource is empty ",404);
         }
@@ -67,14 +67,14 @@ public class MeetingMinutesServiceImpl implements MeetingMinutesService {
    }
 
    @Override
-   public MeetingMinutes updateMeetingMinutes(UpdateMeetingMinutesDto dto) {
+   public MeetingMinutes updateMeetingMinutes(MeetingMinutes minutes) {
 
-      if (dto.getMeetingMinutesId() == null) {
+      if (minutes.getMeetingMinutesId() == null) {
 
          throw new WebApplicationException("Invalid Meeting Minutes Id ", 400);
       }
 
-      MeetingMinutes meetingMinutes = repo.getMeetingMinutesByMeetingMinutesId(dto.getMeetingMinutesId());
+      MeetingMinutes meetingMinutes = repo.getMeetingMinutesByMeetingMinutesId(minutes.getMeetingMinutesId());
 
       if (meetingMinutes == null) {
 
@@ -83,15 +83,17 @@ public class MeetingMinutesServiceImpl implements MeetingMinutesService {
 
       logger.info("------Meeting Minutes------" + meetingMinutes);
 
-      MeetingMinutes minute = dto.getMeetingMinutes();
+      
+     System.out.println("-----input-----"+minutes);
+      System.out.println("--------------ooo"+meetingMinutes.getId());
 
-      minute.setId(meetingMinutes.getId());
+      minutes.setId(meetingMinutes.getId());
 
-      logger.info("-----Dto -----" + minute);
+      logger.info("-----Dto -----" + minutes);
+     System.out.println("aaaaaaaaa"+minutes);
+      MeetingMinutes.update(minutes);
 
-      MeetingMinutes.update(minute);
-
-      return dto.getMeetingMinutes();
+      return minutes;
    }
 
    @Override
