@@ -15,9 +15,5 @@ public class SequenceRepository {
         SequenceCounters.update(scounter);
         return  seqnumber;
   }
-
-    public String getSeqNumber(String string) {
-        return null;
-    }
   
 }
