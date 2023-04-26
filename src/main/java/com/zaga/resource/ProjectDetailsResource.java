@@ -27,7 +27,6 @@ import org.bson.types.Binary;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 
-import com.oracle.svm.core.annotate.Delete;
 import com.zaga.event.EventDto;
 import com.zaga.model.entity.DocumentType;
 import com.zaga.model.entity.PdfEntity;
