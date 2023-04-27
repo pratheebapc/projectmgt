@@ -23,6 +23,8 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.bson.types.Binary;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -47,6 +49,10 @@ public class ProjectDetailsResource {
     // Emitter<EventDto> eventemitter;
 
     @Inject
+    @Channel("po-out")
+    Emitter<EventDto> emitter;
+
+    @Inject
     ProjectDetailsService service;
 
     @Inject
@@ -69,7 +75,7 @@ public class ProjectDetailsResource {
                     .eventId(UUID.randomUUID().toString())
                     .eventData(projectDetails2).build();
 
-            // eventemitter.send(poEvent);
+            emitter.send(poEvent);
 
             return Response.ok(projectDetails2).build();
         } catch (WebApplicationException e) {

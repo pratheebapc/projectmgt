@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-@JsonIgnoreProperties({ "id" })
+@JsonIgnoreProperties({ "id", "projectType", "clientCurrency" })
 @MongoEntity(collection = "ProjectDetails", database = "ProjectManagement")
 public class ProjectDetails extends PanacheMongoEntity {
 
@@ -59,5 +59,6 @@ public class ProjectDetails extends PanacheMongoEntity {
     // ProjectType
     public ProjectType projectType;
 
-    public ProjectDetails() {}
+    public ProjectDetails() {
+    }
 }

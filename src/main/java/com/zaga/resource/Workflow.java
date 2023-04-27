@@ -12,9 +12,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaga.client.PoWorkflow;
+import com.zaga.event.EventDto;
+import com.zaga.model.entity.ProjectDetails;
 
 //import com.zaga.client.PoWorkflow;
 
@@ -43,5 +48,24 @@ public class Workflow {
     private String encodeCredentials(String username, String password) {
         String credentials = username + ":" + password;
         return Base64.getEncoder().encodeToString(credentials.getBytes());
+    }
+
+    @Incoming("po-in")
+    public void triggerprocess(EventDto message) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String username = "rhpamAdmin";
+
+        String password = "Admin@123";
+
+        String processID = "poworkflow.poworkflow";
+
+        String containerId = "poworkflow_1.0.0-SNAPSHOT";
+
+        String credentials = encodeCredentials(username, password);
+        String payload = objectMapper.writeValueAsString(message.getEventData());
+        String creds = "Basic " + credentials;
+        System.out.println("-----data---" + payload);
+        startProcess(creds, containerId, processID, payload);
     }
 }

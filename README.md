@@ -1,8 +1,14 @@
-# project-management
+# Project-Management
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Workflows
+
+### Po Event Triggering the Workflow
+
+![Event Flow ](./docs/Po.png)
 
 ## Running the application in dev mode
 
