@@ -1,14 +1,54 @@
 # Project-Management
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus, Java Framework.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Table of Contents
+
+1. [Project Structure](#project-structure)
+2. [Configurations](#configurations)
+3. [Workflows](#workflows)
+4. [Running the application in dev mode](#running-the-application-in-dev-mode)
+5. [Packaging and running the application](#packaging-and-running-the-application)
+6. [Dockerizing the application](#dockerizing-the-application)
+7. [Creating a native executable](#creating-a-native-executable)
+
+## Project Structure
 
 ## Workflows
 
 ### Po Event Triggering the Workflow
 
 ![Event Flow ](./docs/Po.png)
+
+## Configurations
+
+### Kafka Producer Configuration
+
+```java
+mp.messaging.outgoing.po-out.connector=smallrye-kafka
+mp.messaging.outgoing.po-out.topic=po-workflow
+mp.messaging.outgoing.po-out.key.serializer=org.apache.kafka.common.serialization.StringSerializer
+mp.messaging.outgoing.po-out.value.serializer=io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+
+```
+
+### Kafka Consumer Configuration
+
+```java
+mp.messaging.incoming.po-in.connector=smallrye-kafka
+mp.messaging.incoming.po-in.topic=po-workflow
+mp.messaging.incoming.po-in.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+mp.messaging.incoming.po-in.value.deserializer=com.zaga.consumer.MailDeserializer
+
+```
+
+### Quarkus Rest Client Configuration
+
+```java
+quarkus.rest-client.pdf-api.url=http://localhost:8080/Zaga/document-service
+quarkus.rest-client.pdf-api.scope=javax.inject.Singleton
+
+```
 
 ## Running the application in dev mode
 
@@ -52,13 +92,13 @@ First Package the Application
 Create the Docker image using Docker daemon
 
 ```shell script
-docker build -t projectManagement-quarkus-app -f src/main/docker/Dockerfile.jvm .
+docker build -t projectmanagement-quarkus-app -f src/main/docker/Dockerfile.jvm .
 ```
 
 Run the container
 
 ```shell script
- docker run -d -p 8081:8081 projectManagement-quarkus-app
+ docker run -d -p 8081:8081 projectmanagement-quarkus-app
 ```
 
 ## Creating a native executable
