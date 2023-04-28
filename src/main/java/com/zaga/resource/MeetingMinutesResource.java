@@ -20,7 +20,7 @@ import com.zaga.model.entity.MeetingMinutes;
 import com.zaga.repository.MeetingMinutesRepository;
 import com.zaga.service.MeetingMinutesService;
 
-@Path("/zaga/projectManagement")
+@Path("/meetingMinutes")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MeetingMinutesResource {
@@ -32,14 +32,14 @@ public class MeetingMinutesResource {
   MeetingMinutesRepository repo;
 
   @GET
-  @Path("/meetingMinutes/getMeetingMinutes")
+  @Path("/getMeetingMinutes")
   public Response getMeetingMinutes(){
     List<MeetingMinutes> minutes = service.getMeetingMinutesList();
     return Response.ok(minutes).build();
   }
 
   @GET
-  @Path("/meetingMinutes/getMeetingMinutesByMeetingMinutesId/{meetingMinutesId}")
+  @Path("/getMeetingMinutesByMeetingMinutesId/{meetingMinutesId}")
   public Response getMeetingMinutesByMeetingMinutesId(String meetingMinutesId){
     try{
       MeetingMinutes minutes = repo.getMeetingMinutesByMeetingMinutesId(meetingMinutesId);
@@ -52,7 +52,7 @@ public class MeetingMinutesResource {
   }
 
   @GET
-  @Path("/meetingMinutes/getMeetingMinutesByProjectId/{projectId}")
+  @Path("/getMeetingMinutesByProjectId/{projectId}")
   public Response getMeetingMinutesByProjectId(String projectId){
     try{
       List<MeetingMinutes> minutes = repo.getMeetingMinutesById(projectId);
@@ -65,7 +65,7 @@ public class MeetingMinutesResource {
   }
 
   @PUT
-  @Path("/meetingMinutes/modifyMeetingMinutesById")
+  @Path("/modifyMeetingMinutesById")
   public Response updateMeetingMinutes(MeetingMinutes dto) {
     try {
       service.updateMeetingMinutes(dto);
@@ -77,7 +77,7 @@ public class MeetingMinutesResource {
   }
 
   @DELETE
-    @Path("/meetingMinutes/deleteMeetingMinutesById/{meetingMinutesId}")
+    @Path("/deleteMeetingMinutesById/{meetingMinutesId}")
     public Response deleteMeetingMinutesById(@PathParam("meetingMinutesId") String meetingMinutesId) {
       try {
         service.deleteMeetingMinutes(meetingMinutesId);
@@ -87,7 +87,7 @@ public class MeetingMinutesResource {
       }
     }
   @POST
-  @Path("meetingMinutes/createMeetingMinutes")
+  @Path("/createMeetingMinutes")
   public Response createMeetingMinutes(MeetingMinutes meetingMinutes) {
     MeetingMinutes meeetingminutes = service.createMeetingMinutes(meetingMinutes);
     return Response.ok(meeetingminutes).build();
