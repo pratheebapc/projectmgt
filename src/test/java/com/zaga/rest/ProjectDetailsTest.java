@@ -6,13 +6,19 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+
+import com.zaga.model.dto.Agenda;
+import com.zaga.model.dto.Attendees;
 import com.zaga.model.entity.Currency;
+import com.zaga.model.entity.MeetingMinutes;
 import com.zaga.model.entity.ProjectDetails;
 import com.zaga.model.entity.ProjectType;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,6 +28,7 @@ public class ProjectDetailsTest {
         private static ObjectMapper mapper;
         private static String projectName;
         private ProjectDetails createResponse;
+        private MeetingMinutes createResponse1;
 
         @BeforeAll
         public static void setUp() throws Exception {
@@ -157,4 +164,120 @@ public class ProjectDetailsTest {
                                 .then()
                                 .statusCode(204);
         }
+
+        // @Test
+        // @Order(6)
+        // void createMeetingMinutesApiTest() throws JsonProcessingException {
+        // List<Attendees> list = new ArrayList<Attendees>();
+        // Attendees attendee = new Attendees("Alberto", "Redhat");
+        // Attendees attendee1 = new Attendees("Bala", "Redhat");
+        // list.add(attendee);
+        // list.add(attendee1);
+        // List<Agenda> list1 = new ArrayList<Agenda>();
+        // Agenda agenda = new Agenda("PAM issue", "2hours", "Bala", "Explained about
+        // PAM issue");
+        // list1.add(agenda);
+        // MeetingMinutes minutes = MeetingMinutes.builder().id(null)
+        // .employeeName("Surendhar").projectName("citi
+        // ci").projectId("45").meetingMinutesId(null)
+        // .date("2023-04-10").startTime("10:00 AM").endTime("12:00 PM")
+        // .meetingObjective("Discussed about the CI
+        // issue").attendeesPresent(list).agenda(list1)
+        // .build();
+
+        // String json = mapper.writeValueAsString(minutes);
+
+        // Response response = RestAssured.given()
+        // .contentType(ContentType.JSON)
+        // .accept(ContentType.JSON)
+        // .body(json)
+        // .when()
+        // .post("/zaga/projectManagement/meetingMinutes/createMeetingMinutes");
+        // String responseBody = response.getBody().asString();
+        // createResponse1 = mapper.readValue(responseBody, MeetingMinutes.class);
+
+        // response
+        // .then()
+        // .statusCode(200);
+
+        // System.out.println("---------" + createResponse1);
+        // }
+
+        // @Test
+        // @Order(7)
+        // void getMeetingMinutesApiTest() {
+        // RestAssured.given()
+        // .when()
+        // .get("/zaga/projectManagement/meetingMinutes/getMeetingMinutes")
+        // .then()
+        // .statusCode(200);
+        // }
+
+        // @Test
+        // @Order(8)
+        // void getMeetingMinutesByMeetingMinutesIdTest() {
+        // RestAssured.given()
+        // .contentType(ContentType.JSON)
+        // .pathParam("meetingMinutesId", createResponse1.meetingMinutesId)
+        // .when()
+        // .get("/zaga/projectManagement/meetingMinutes/getMeetingMinutesByMeetingMinutesId/{meetingMinutesId}")
+        // .then()
+        // .statusCode(200);
+        // }
+
+        // @Test
+        // @Order(9)
+        // void getMeetingMinutesByProjectIdTest() {
+        // RestAssured.given()
+        // .contentType(ContentType.JSON)
+        // .pathParam("projectId", createResponse1.projectId)
+        // .when()
+        // .get("/zaga/projectManagement/meetingMinutes/getMeetingMinutesByProjectId/{projectId}")
+        // .then()
+        // .statusCode(200);
+        // }
+
+        // @Test
+        // @Order(10)
+        // void updateMeetingMinutesApiTest() throws JsonProcessingException {
+        // List<Attendees> list = new ArrayList<Attendees>();
+        // Attendees attendee = new Attendees("Alberto", "Redhat");
+        // Attendees attendee1 = new Attendees("Bala", "Redhat");
+        // list.add(attendee);
+        // list.add(attendee1);
+        // List<Agenda> list1 = new ArrayList<Agenda>();
+        // Agenda agenda = new Agenda("PAM issue", "2hours", "Bala", "Explained about
+        // PAM issue");
+        // list1.add(agenda);
+
+        // MeetingMinutes minutes = MeetingMinutes.builder().id(null)
+        // .employeeName("Surendhar").projectName("citi ci").projectId("45")
+        // .meetingMinutesId(createResponse1.meetingMinutesId)
+        // .date("2023-04-10").startTime("10:00 AM").endTime("12:00 PM")
+        // .meetingObjective("Discussed about the CI
+        // issue").attendeesPresent(list).agenda(list1)
+        // .build();
+
+        // String json = mapper.writeValueAsString(minutes);
+        // RestAssured.given()
+        // .contentType(ContentType.JSON)
+        // .accept(ContentType.JSON)
+        // .body(json)
+        // .when()
+        // .put("/zaga/projectManagement/meetingMinutes/modifyMeetingMinutesById").then()
+        // .statusCode(200);
+        // }
+
+        // @Test
+        // @Order(11)
+        // void deleteMeetingMinutesApiTest() {
+        // RestAssured.given()
+        // .contentType(ContentType.JSON)
+        // .pathParam("meetingMinutesId", createResponse1.meetingMinutesId)
+        // .when()
+        // .delete("/zaga/projectManagement/meetingMinutes/deleteMeetingMinutesById/{meetingMinutesId}")
+        // .then()
+        // .statusCode(200);
+        // }
+
 }

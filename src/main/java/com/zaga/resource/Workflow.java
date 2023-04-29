@@ -1,6 +1,9 @@
 package com.zaga.resource;
 
+import java.time.LocalDate;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -16,9 +19,11 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaga.client.PoWorkflow;
 import com.zaga.event.EventDto;
+import com.zaga.model.dto.Data;
 import com.zaga.model.entity.ProjectDetails;
 
 //import com.zaga.client.PoWorkflow;
@@ -40,9 +45,10 @@ public class Workflow {
     public void startProcess(@HeaderParam("Authorization") String authorization,
             @QueryParam("containerId") String containerId,
             @QueryParam("processID") String processID,
-            String payload) {
-        System.out.println(authorization);
-        workflow.startProcess(authorization, containerId, processID, payload);
+            Map<String, Object> data) {
+        System.out.println("-------ready to start -----" + authorization);
+        System.out.println("---------process data-------" + data);
+        workflow.startProcess(authorization, containerId, processID, data);
     }
 
     private String encodeCredentials(String username, String password) {
@@ -63,9 +69,29 @@ public class Workflow {
         String containerId = "poworkflow_1.0.0-SNAPSHOT";
 
         String credentials = encodeCredentials(username, password);
-        String payload = objectMapper.writeValueAsString(message.getEventData());
+        System.out.println("-----------Before ---- mapping---------");
+        Object vdata = message.getEventData();
+
         String creds = "Basic " + credentials;
-        System.out.println("-----data---" + payload);
-        startProcess(creds, containerId, processID, payload);
+        System.out.println("------------message data-------" + vdata.toString());
+        String payload = objectMapper.writeValueAsString(vdata);
+        // TypeReference<ProjectDetails> typeRef = new TypeReference<ProjectDetails>() {
+        // };
+        ProjectDetails pd = objectMapper.convertValue(payload, ProjectDetails.class);
+
+        System.out.println("---------pd------" + pd);
+
+        // Data data = new Data();
+        // data.setDatas(vdata);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        // Map<String, Object> projectDetails = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("com.projectautomation.poworkflow.ProjectDetails", message.getEventData());
+        dataMap.put("Data", data);
+
+        // System.out.println("-----data---" + payload);
+        startProcess(creds, containerId, processID, dataMap);
     }
 }

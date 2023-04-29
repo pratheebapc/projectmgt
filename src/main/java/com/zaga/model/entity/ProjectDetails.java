@@ -1,5 +1,6 @@
 package com.zaga.model.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import org.bson.types.ObjectId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,13 +9,17 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties({ "id", "projectType", "clientCurrency" })
 @MongoEntity(collection = "ProjectDetails", database = "ProjectManagement")
-public class ProjectDetails extends PanacheMongoEntity {
+public class ProjectDetails extends PanacheMongoEntity implements Serializable {
 
     public ObjectId id;
 
@@ -59,6 +64,10 @@ public class ProjectDetails extends PanacheMongoEntity {
     // ProjectType
     public ProjectType projectType;
 
-    public ProjectDetails() {
+    // public ProjectDetails() {
+    // }
+    public ProjectDetails(String json) {
+        // use a JSON parser like Jackson to parse the JSON string and populate the
+        // fields
     }
 }

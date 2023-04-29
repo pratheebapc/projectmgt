@@ -1,5 +1,7 @@
 package com.zaga.client;
 
+import java.util.Map;
+
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -11,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.kie.api.runtime.process.ProcessInstance;
 
+import com.zaga.model.entity.ProjectDetails;
+
 @RegisterRestClient(configKey = "kie-server")
 @Path("/kie-server/services/rest/server")
 public interface PoWorkflow {
@@ -21,5 +25,5 @@ public interface PoWorkflow {
             @HeaderParam("Authorization") String authorization,
             @PathParam("containerId") String containerId,
             @PathParam("processId") String processId,
-            String payload);
+            Map<String, Object> Data);
 }
