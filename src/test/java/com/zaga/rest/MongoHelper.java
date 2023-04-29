@@ -1,7 +1,5 @@
 package com.zaga.rest;
 
-import static org.awaitility.Awaitility.await;
-
 import de.flapdoodle.embed.mongo.*;
 import de.flapdoodle.embed.mongo.config.MongoCmdOptions;
 import de.flapdoodle.embed.mongo.config.MongoImportConfig;
@@ -14,6 +12,7 @@ import de.flapdoodle.embed.process.runtime.ProcessControl;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
@@ -46,38 +45,46 @@ public class MongoHelper {
         File jsonFile = new File(fixturePath);
 
         MongoImportConfig mongoImportConfig = MongoImportConfig.builder()
-            .version(version)
-            .net(net)
-            .databaseName(dbName)
-            .collectionName(collection)
-            .isUpsertDocuments(true)
-            .isDropCollection(true)
-            .isJsonArray(true)
-            .importFile(jsonFile.getAbsolutePath())
-            .build();
+                .version(version)
+                .net(net)
+                .databaseName(dbName)
+                .collectionName(collection)
+                .isUpsertDocuments(true)
+                .isDropCollection(true)
+                .isJsonArray(true)
+                .importFile(jsonFile.getAbsolutePath())
+                .build();
 
         MongoImportExecutable exec = MongoImportStarter
-            .getDefaultInstance()
-            .prepare(mongoImportConfig);
+                .getDefaultInstance()
+                .prepare(mongoImportConfig);
+
+        // MongoImportProcess mongoImportProcess = exec.start();
+        // mongoImportProcess.stop();
+        // exec.stop();
 
         MongoImportProcess mongoImportProcess = exec.start();
-        mongoImportProcess.stop();
+        try {
+            mongoImportProcess.waitFor();
+        } catch (InterruptedException e) {
+
+            System.err.println("Error whith the import process: " + e.getMessage());
+        } finally {
+
+            mongoImportProcess.stop();
+            exec.stop();
+
+        }
     }
 
     void stopDB() {
-        try {
-            kill(mongod);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
 
-        if (mongodExe != null) {
-            try {
-                mongodExe.stop();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
+
+        mongod.stop();
+
+        mongodExe.stop();
+
+
     }
 
     private void kill(MongodProcess mongod) throws NoSuchFieldException, IllegalAccessException {

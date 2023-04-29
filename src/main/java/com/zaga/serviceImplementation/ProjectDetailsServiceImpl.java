@@ -120,6 +120,4 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
         return details;
     }
 
-   
-
 }

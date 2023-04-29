@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;

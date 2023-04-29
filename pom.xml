@@ -28,6 +28,17 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+  <!-- <dependency>
+    <groupId>org.kie.server</groupId>
+    <artifactId>kie-server-client</artifactId>
+    <version>7.67.0.Final-redhat-00017</version> 
+</dependency> -->
+<dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-api</artifactId>
+      <version>7.67.0.Final</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
@@ -63,17 +74,23 @@
       <artifactId>quarkus-rest-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-rest-client-jackson</artifactId>
-    </dependency>
+
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-rest-client-jackson</artifactId>
+    </dependency><dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-smallrye-health</artifactId>
+</dependency>
+   
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
-    <!-- <dependency>
+     <dependency>
+
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
-    </dependency> -->
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>

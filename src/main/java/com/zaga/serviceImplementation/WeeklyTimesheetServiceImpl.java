@@ -3,7 +3,6 @@ package com.zaga.serviceImplementation;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

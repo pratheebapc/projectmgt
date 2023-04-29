@@ -1,6 +1,9 @@
 package com.zaga.event;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.zaga.model.entity.ProjectDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EventDto {
+public class EventDto implements Serializable {
     public String source;
-    public String destination;    
-    public String eventId; 
+    public String destination;
+    public String eventId;
     public LocalDateTime eventDate;
-    public Object eventData; 
-    
+    public Object eventData;
+
 }
