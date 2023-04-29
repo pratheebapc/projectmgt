@@ -7,8 +7,15 @@ import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.IFeatureAwareVersion;
 import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.AbstractProcess;
+import de.flapdoodle.embed.process.runtime.ProcessControl;
+
 import java.io.File;
 import java.io.IOException;
+
+import java.lang.reflect.Field;
+import java.util.concurrent.TimeUnit;
+
 
 public class MongoHelper {
     private MongodExecutable mongodExe;
@@ -72,9 +79,22 @@ public class MongoHelper {
 
     void stopDB() {
 
+
         mongod.stop();
 
         mongodExe.stop();
 
+
+    }
+
+    private void kill(MongodProcess mongod) throws NoSuchFieldException, IllegalAccessException {
+        Field processControlField = AbstractProcess.class.getDeclaredField("process");
+        processControlField.setAccessible(true);
+        ProcessControl processControl = (ProcessControl) processControlField.get(mongod);
+
+        Field processField = ProcessControl.class.getDeclaredField("process");
+        processField.setAccessible(true);
+        Process process = (Process) processField.get(processControl);
+        process.destroy();
     }
 }
