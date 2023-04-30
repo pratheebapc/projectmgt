@@ -52,7 +52,7 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
         if (projects.isEmpty()) {
 
-            throw new WebApplicationException("The Resource is empty ", 404);
+            throw new WebApplicationException("The Resource is empty ", 500);
         }
 
         List<ProjectLimitedDto> projectDtoList = projects.stream()
@@ -72,7 +72,7 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     public ProjectDetails getProjectDetailsById(String projectId) {
         ProjectDetails projectDetails = repo.getProjectDetailsById(projectId);
         if (projectDetails == null) {
-            throw new WebApplicationException("The Resource is empty ", 404);
+            throw new WebApplicationException("The Resource is empty ", 500);
         }
         return projectDetails;
     }
@@ -84,7 +84,7 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
 
         ProjectDetails projectDetails = repo.getProjectDetailsById(dto.getProjectId());
         if (projectDetails == null) {
-            throw new WebApplicationException("The Resource is empty ", 404);
+            throw new WebApplicationException("The Resource is empty ", 500);
         }
 
         ProjectDetails details = dto;
