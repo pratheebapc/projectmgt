@@ -29,6 +29,6 @@ jobs:
         image: pratheebapc/project-management-jvm
         tags: latest
         registry: docker.io
-        dockerfile: Dockerfile
+        dockerfile: src/main/docker/Dockerfile.jvm
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
